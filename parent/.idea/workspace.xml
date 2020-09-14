@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="c1e6080e-970d-4a7b-b0d9-28c05c57ea06" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="FxmlFile" />
+        <option value="HTML File" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="1bn3x82mAhUOEY3d2TFYuSNrO8o" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="go.import.settings.migrated" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../basic/src/test" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/../basic/src/test" />
+      <recent name="$PROJECT_DIR$/../basic/src/main/resources" />
+      <recent name="$PROJECT_DIR$/../socket/src/main/resources" />
+      <recent name="$PROJECT_DIR$/../io/src/main/resources" />
+      <recent name="$PROJECT_DIR$/../io/src/test/resources" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/../io/src/main/java/club/yuit/io" />
+      <recent name="$PROJECT_DIR$/../io/src/main/resources" />
+      <recent name="$PROJECT_DIR$/../common/src/main/resources" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="Detergent" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Detergent" />
+      <module name="socket" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Leaf" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Leaf" />
+      <module name="socket" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="socket" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StaticInitialization" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="StaticInitialization" />
+      <module name="socket" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestXY" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="club.yuit.basic.function.TestXY" />
+      <module name="basic" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="club.yuit.basic.function.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="client1" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="club.yuit.socket.chat.client.Main" />
+      <module name="socket" />
+      <option name="PROGRAM_PARAMETERS" value="yuit007" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.client1" />
+      <item itemvalue="Application.TestXY" />
+      <item itemvalue="Application.Main" />
+      <item itemvalue="Application.Leaf" />
+      <item itemvalue="Application.StaticInitialization" />
+      <item itemvalue="Application.Detergent" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Application.Detergent" />
+        <item itemvalue="Application.StaticInitialization" />
+        <item itemvalue="Application.Leaf" />
+        <item itemvalue="Application.TestXY" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c1e6080e-970d-4a7b-b0d9-28c05c57ea06" name="Default Changelist" comment="" />
+      <created>1589254273851</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1589254273851</updated>
+      <workItem from="1589254275142" duration="4432000" />
+      <workItem from="1589259992367" duration="7815000" />
+      <workItem from="1589331070464" duration="20830000" />
+      <workItem from="1589382221047" duration="64000" />
+      <workItem from="1589427113933" duration="15295000" />
+      <workItem from="1589453548510" duration="1227000" />
+      <workItem from="1589511907385" duration="3351000" />
+      <workItem from="1589778173291" duration="1502000" />
+      <workItem from="1589850369521" duration="824000" />
+      <workItem from="1590193569791" duration="3114000" />
+      <workItem from="1590280443958" duration="1428000" />
+      <workItem from="1590368888335" duration="1751000" />
+      <workItem from="1590401612145" duration="1901000" />
+      <workItem from="1590477047844" duration="2792000" />
+      <workItem from="1590712419766" duration="6192000" />
+      <workItem from="1590741756008" duration="4638000" />
+      <workItem from="1591163611596" duration="553000" />
+      <workItem from="1591860396319" duration="2261000" />
+      <workItem from="1598250624584" duration="2396000" />
+      <workItem from="1598332130939" duration="1742000" />
+      <workItem from="1598511888450" duration="2483000" />
+      <workItem from="1598602634679" duration="617000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="1489" y="345" key="#com.intellij.ide.util.MemberChooser" timestamp="1590747008053">
+      <screen x="0" y="23" width="3440" height="1330" />
+    </state>
+    <state x="1489" y="345" key="#com.intellij.ide.util.MemberChooser/0.23.3440.1330@0.23.3440.1330" timestamp="1590747008053" />
+    <state width="1988" height="321" key="GridCell.Tab.0.bottom" timestamp="1598615689502">
+      <screen x="0" y="23" width="3440" height="1326" />
+    </state>
+    <state width="1988" height="321" key="GridCell.Tab.0.bottom/0.23.3440.1326@0.23.3440.1326" timestamp="1598615689502" />
+    <state width="1988" height="321" key="GridCell.Tab.0.bottom/0.23.3440.1330@0.23.3440.1330" timestamp="1598334041805" />
+    <state width="1988" height="321" key="GridCell.Tab.0.center" timestamp="1598615689501">
+      <screen x="0" y="23" width="3440" height="1326" />
+    </state>
+    <state width="1988" height="321" key="GridCell.Tab.0.center/0.23.3440.1326@0.23.3440.1326" timestamp="1598615689501" />
+    <state width="1988" height="321" key="GridCell.Tab.0.center/0.23.3440.1330@0.23.3440.1330" timestamp="1598334041804" />
+    <state width="1988" height="321" key="GridCell.Tab.0.left" timestamp="1598615689500">
+      <screen x="0" y="23" width="3440" height="1326" />
+    </state>
+    <state width="1988" height="321" key="GridCell.Tab.0.left/0.23.3440.1326@0.23.3440.1326" timestamp="1598615689500" />
+    <state width="1988" height="321" key="GridCell.Tab.0.left/0.23.3440.1330@0.23.3440.1330" timestamp="1598334041803" />
+    <state width="1988" height="321" key="GridCell.Tab.0.right" timestamp="1598615689502">
+      <screen x="0" y="23" width="3440" height="1326" />
+    </state>
+    <state width="1988" height="321" key="GridCell.Tab.0.right/0.23.3440.1326@0.23.3440.1326" timestamp="1598615689502" />
+    <state width="1988" height="321" key="GridCell.Tab.0.right/0.23.3440.1330@0.23.3440.1330" timestamp="1598334041804" />
+    <state width="3388" height="325" key="GridCell.Tab.1.bottom" timestamp="1591866987503">
+      <screen x="0" y="23" width="3440" height="1330" />
+    </state>
+    <state width="3388" height="325" key="GridCell.Tab.1.bottom/0.23.3440.1330@0.23.3440.1330" timestamp="1591866987503" />
+    <state width="3388" height="325" key="GridCell.Tab.1.center" timestamp="1591866987502">
+      <screen x="0" y="23" width="3440" height="1330" />
+    </state>
+    <state width="3388" height="325" key="GridCell.Tab.1.center/0.23.3440.1330@0.23.3440.1330" timestamp="1591866987502" />
+    <state width="3388" height="325" key="GridCell.Tab.1.left" timestamp="1591866987501">
+      <screen x="0" y="23" width="3440" height="1330" />
+    </state>
+    <state width="3388" height="325" key="GridCell.Tab.1.left/0.23.3440.1330@0.23.3440.1330" timestamp="1591866987501" />
+    <state width="3388" height="325" key="GridCell.Tab.1.right" timestamp="1591866987502">
+      <screen x="0" y="23" width="3440" height="1330" />
+    </state>
+    <state width="3388" height="325" key="GridCell.Tab.1.right/0.23.3440.1330@0.23.3440.1330" timestamp="1591866987502" />
+    <state width="3388" height="325" key="GridCell.Tab.2.bottom" timestamp="1591866987505">
+      <screen x="0" y="23" width="3440" height="1330" />
+    </state>
+    <state width="3388" height="325" key="GridCell.Tab.2.bottom/0.23.3440.1330@0.23.3440.1330" timestamp="1591866987505" />
+    <state width="3388" height="325" key="GridCell.Tab.2.center" timestamp="1591866987504">
+      <screen x="0" y="23" width="3440" height="1330" />
+    </state>
+    <state width="3388" height="325" key="GridCell.Tab.2.center/0.23.3440.1330@0.23.3440.1330" timestamp="1591866987504" />
+    <state width="3388" height="325" key="GridCell.Tab.2.left" timestamp="1591866987503">
+      <screen x="0" y="23" width="3440" height="1330" />
+    </state>
+    <state width="3388" height="325" key="GridCell.Tab.2.left/0.23.3440.1330@0.23.3440.1330" timestamp="1591866987503" />
+    <state width="3388" height="325" key="GridCell.Tab.2.right" timestamp="1591866987504">
+      <screen x="0" y="23" width="3440" height="1330" />
+    </state>
+    <state width="3388" height="325" key="GridCell.Tab.2.right/0.23.3440.1330@0.23.3440.1330" timestamp="1591866987504" />
+    <state x="1145" y="473" key="new project wizard" timestamp="1590477288940">
+      <screen x="0" y="23" width="3440" height="1330" />
+    </state>
+    <state x="1145" y="473" key="new project wizard/0.23.3440.1330@0.23.3440.1330" timestamp="1590477288940" />
+    <state x="1745" y="312" key="run.anything.popup" timestamp="1590719834049">
+      <screen x="0" y="23" width="3440" height="1330" />
+    </state>
+    <state x="1745" y="312" key="run.anything.popup/0.23.3440.1330@0.23.3440.1330" timestamp="1590719834049" />
+    <state x="1301" y="319" width="838" height="1032" key="search.everywhere.popup" timestamp="1598332469660">
+      <screen x="0" y="23" width="3440" height="1330" />
+    </state>
+    <state x="1301" y="319" width="838" height="1032" key="search.everywhere.popup/0.23.3440.1330@0.23.3440.1330" timestamp="1598332469660" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$USER_HOME$/software/jdk-11/Contents/Home/lib/src.zip!/java.base/java/io/InputStream.java</url>
+          <line>265</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

@@ -19,11 +19,10 @@ public class Th_Wait_Notify {
         t1.start();
         t2.start();
         t3.start();
-
-
       for (int i=0;i<4;i++){
           Thread.sleep(3000);
           synchronized (Th_Wait_Notify.object){
+              // notify 方法随机唤醒等待队列中的线程
               Th_Wait_Notify.object.notify();
           }
       }
@@ -35,9 +34,6 @@ public class Th_Wait_Notify {
 
 class  T extends Thread {
 
-
-
-
     @Override
     public void run() {
         exec();
@@ -48,6 +44,7 @@ class  T extends Thread {
         synchronized (Th_Wait_Notify.object){
             System.out.println(getName());
             try {
+                // wait 方法线程进入等待队列，释放资源
                 Th_Wait_Notify.object.wait();
             } catch (InterruptedException e) {
                 e.printStackTrace();

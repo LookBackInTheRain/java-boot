@@ -16,6 +16,7 @@
         <module>../io</module>
         <module>../common</module>
         <module>../basic</module>
+        <module>../thread</module>
     </modules>
 
     <dependencies>

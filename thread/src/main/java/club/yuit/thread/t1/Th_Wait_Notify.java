@@ -49,7 +49,7 @@ class  T extends Thread {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println(getName()+"notified");
+            System.out.println(getName()+" notified");
         }
 
     }

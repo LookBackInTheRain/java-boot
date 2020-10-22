@@ -28,9 +28,10 @@ public class Main{
 }
 ```
 
-# 线程暂停的方式
+# 线程阻塞的方式
 1. sleep(long time) 方法，线程阻塞但不会释放资源
 2. wait() 方法，释放资源，使用notify（随机唤醒一个）或notifyAll（全部唤醒）唤醒线程
+3. join()方法，当前线程阻塞等待其他线程完成；不会释放资源
 
 # 线程同步
 1. synchronized 关键字

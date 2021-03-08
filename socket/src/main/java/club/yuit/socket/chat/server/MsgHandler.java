@@ -9,7 +9,10 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketAddress;
 import java.util.List;
 
 @Slf4j
@@ -41,6 +44,7 @@ public class MsgHandler implements Runnable {
 
     }
 
+    @Override
     public void run() {
 
         boolean flg = true;
@@ -66,6 +70,9 @@ public class MsgHandler implements Runnable {
                                 if (packet.getMsgType()==Constant.MSG_USER_ONLINE){
                                     packet.setData("[系统消息]:<"+currentUser.getUsername()+">上线了");
                                 }else {
+                                   SocketAddress address = currentUser.getSocket().getRemoteSocketAddress();
+                                   log.debug(address.toString());
+                                    log.debug("{}--->{}",currentUser.getUsername(),item.getUsername());
                                     packet.setData("["+currentUser.getUsername()+"]:"+packet.getData());
                                 }
                                 packetHandler.sendPacket(packet,iut);

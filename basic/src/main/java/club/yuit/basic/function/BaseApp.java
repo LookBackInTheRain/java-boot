@@ -2,19 +2,24 @@ package club.yuit.basic.function;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author yuit
  * @date 2020/5/26 下午3:18
  */
 @Slf4j
-public class BaseApp {
+public abstract class BaseApp  {
 
-    public App init(){
+    List<App> apps= new ArrayList<>();
 
-        return this::tt;
+    public void init(){
+        apps.add(this::onStart);
     }
 
-    private void tt(){
-        log.info("tt");
+
+    private void onStart(){
+        log.info("onStart");
     }
 }

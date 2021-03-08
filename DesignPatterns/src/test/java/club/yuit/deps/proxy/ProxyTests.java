@@ -29,3 +29,13 @@ public class ProxyTests {
     }
 
 }
+
+class MyLoader extends ClassLoader {
+    @Override
+    public Class<?> loadClass(String name) throws ClassNotFoundException {
+
+        Class<?> clazz = Class.forName("com.ccnode.sys.Driu");
+
+        return super.loadClass(name);
+    }
+}

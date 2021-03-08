@@ -13,7 +13,7 @@ public class Main {
 
 
     public static void main(String[] args) throws IOException, ParseException {
-       /* Client client = new Client("127.0.0.1", 8000);
+        Client client = new Client("172.16.2.36", 8000);
         client.connect(args[0]);
 
 
@@ -29,18 +29,8 @@ public class Main {
             client.send(packet);
         }
         scanner.close();
-        client.close();*/
+        client.close();
 
-        List<Integer> l = Arrays.asList(1,1,2,1);
-
-       Iterator it =  l.iterator();
-
-       while (it.hasNext()){
-           System.out.print(it.next());
-       }
-
-
-        System.out.println("aa");
 
 
     }

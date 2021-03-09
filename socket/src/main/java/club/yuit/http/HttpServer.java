@@ -5,4 +5,9 @@ package club.yuit.http;
  * @date 2021/3/8
  */
 public class HttpServer {
+
+    public static void run(){
+
+    }
+
 }

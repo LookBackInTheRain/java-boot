@@ -1,8 +1,10 @@
 package club.yuit.deps.proxy;
 
-import club.yuit.dps.proxy.IPlayer;
-import club.yuit.dps.proxy.InvocationHandlerImpl;
-import club.yuit.dps.proxy.LOLPlayer;
+import club.yuit.dps.proxy.cglib.PlayProxy;
+import club.yuit.dps.proxy.jdk.IPlayer;
+import club.yuit.dps.proxy.jdk.InvocationHandlerImpl;
+import club.yuit.dps.proxy.jdk.LOLPlayer;
+import net.sf.cglib.proxy.Enhancer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -17,7 +19,7 @@ import java.lang.reflect.Proxy;
 public class ProxyTests {
 
     @Test
-    public void proxyTest(){
+    public void jdkProxyTest(){
         IPlayer player = new LOLPlayer();
         Class<?> clazz = player.getClass();
         IPlayer proxy  = (IPlayer)Proxy.newProxyInstance(clazz.getClassLoader(),clazz.getInterfaces(),new InvocationHandlerImpl(player));
@@ -28,14 +30,17 @@ public class ProxyTests {
 
     }
 
-}
+    @Test
+    public void cglibProxyTest(){
+        Enhancer enhancer = new Enhancer();
+        enhancer.setSuperclass(LOLPlayer.class);
+        enhancer.setCallback(new PlayProxy());
 
-class MyLoader extends ClassLoader {
-    @Override
-    public Class<?> loadClass(String name) throws ClassNotFoundException {
+        LOLPlayer player = (LOLPlayer) enhancer.create();
 
-        Class<?> clazz = Class.forName("com.ccnode.sys.Driu");
-
-        return super.loadClass(name);
+        player.playGame();
     }
+
 }
+
+

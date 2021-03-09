@@ -1,4 +1,4 @@
-package club.yuit.dps.proxy;
+package club.yuit.dps.proxy.jdk;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,7 +25,7 @@ public class InvocationHandlerImpl implements InvocationHandler {
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         System.out.println("before invoke");
         log.info("-----------------------");
-        Object p=method.invoke(this.obj);
+        Object p=method.invoke(this.obj,args);
         System.out.println("after invoke");
         return p;
     }

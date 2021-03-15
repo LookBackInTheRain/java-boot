@@ -15,21 +15,13 @@ public class TestMain {
         buffer.put((byte)3);
         buffer.put((byte)5);
 
-
-        System.out.println(buffer.remaining());
         buffer.flip();
-        buffer.get();
-        int limit = buffer.limit();
-        byte[] ts = new byte[2];
-        System.out.println(buffer.remaining());
-        System.out.println(buffer.get(limit-1));
-        buffer.get(ts);
-        log.info("{}",ts);
-        System.out.println();
-        System.out.println(buffer.remaining());
-        System.out.println(buffer.get(3));
+        buffer.get(3);
 
-        System.out.println();
+        byte[] bytes = new  byte[buffer.limit()];
+        buffer.get(bytes);
+        log.info("{}",bytes);
+        log.info("{}", Integer.MAX_VALUE);
 
 
     }

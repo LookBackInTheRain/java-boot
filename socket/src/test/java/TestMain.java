@@ -10,18 +10,22 @@ import java.nio.ByteBuffer;
 public class TestMain {
     public static void main(String[] args) {
         ByteBuffer buffer = ByteBuffer.allocate(10);
-        buffer.put((byte)1);
-        buffer.put((byte)2);
-        buffer.put((byte)3);
-        buffer.put((byte)5);
+        buffer.put((byte) 1);
+        buffer.put((byte) 2);
+        buffer.put((byte) 3);
+        buffer.put((byte) 4);
+        buffer.put((byte) 5);
+        buffer.put((byte) 6);
+        buffer.put((byte) 7);
+        buffer.put((byte) 8);
 
         buffer.flip();
-        buffer.get(3);
-
-        byte[] bytes = new  byte[buffer.limit()];
-        buffer.get(bytes);
-        log.info("{}",bytes);
-        log.info("{}", Integer.MAX_VALUE);
+        int b1 = buffer.getInt();
+        log.info("{}",b1);
+        buffer.compact();
+        buffer.flip();
+         b1 = buffer.get();
+        log.info("{}",b1);
 
 
     }

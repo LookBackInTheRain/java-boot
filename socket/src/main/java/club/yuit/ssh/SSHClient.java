@@ -21,9 +21,10 @@ import java.util.List;
 @Slf4j
 public class SSHClient {
 
-    public static final byte[] VERSION = "SSH-3.0-UitSSH-0.1\n".getBytes();
+    public static final byte[] VERSION = "SSH-2.0-UitSSH-0.1\n".getBytes();
     public static final byte FLG_LF = 0xA;
     public static final int BUFFER_SIZE =  256;
+    public static final byte[] NONE =  "none".getBytes();
 
     public static void main(String[] args) throws IOException {
 
@@ -48,7 +49,6 @@ public class SSHClient {
      * @throws IOException
      */
     static void checkVersion(SocketChannel channel) throws IOException {
-        channel.write(ByteBuffer.wrap(VERSION));
         ByteBuffer buffer = ByteBuffer.allocate(3500);
         int flg = channel.read(buffer);
 
@@ -69,10 +69,23 @@ public class SSHClient {
             throw new IOException("Server closed connected");
         }
 
-
         byte[] tmp = new byte[buffer.limit() - 2];
         buffer.get(tmp);
         log.info("服务端版本号:{}", new String(tmp));
+
+        if(flg>=8){
+            byte maxVersionNumber = buffer.get(4);
+            byte minVersionNumber = buffer.get(6);
+            if (maxVersionNumber!='2'&&minVersionNumber!='0'){
+                log.info("客户端只支持SSH-2.0");
+                channel.close();
+                throw new IOException("Client support ssh-2.0");
+            }
+        }
+
+        // 向服务端发送版本号
+        channel.write(ByteBuffer.wrap(VERSION));
+
     }
 
     /**
@@ -90,86 +103,111 @@ public class SSHClient {
         }
 
         buffer.flip();
-        //byte flgByte = buffer.get(0);
-
-        /*if (flg>='a' && flg<='Z'){
-            handleVersionDiffer();
-        }*/
-
         // 包长度
-        //int packageLength = buffer.getInt();
+        int packageLength = buffer.getInt();
+        log.info("package length {}", packageLength);
         // 填充长度
-        //byte paddingLength = buffer.get();
+        byte paddingLength = buffer.get();
+        log.info("padding length {}", paddingLength);
+        int payloadLength = packageLength - paddingLength -1;
+        List<byte[]> payloadBytes = new ArrayList<>();
+        byte[] randomPadding = new byte[paddingLength];
+        buffer.compact();
+        buffer.flip();
+        byte[] tmp = new byte[buffer.remaining()];
+        int payloadFlg = tmp.length;
+        int paddingFlg = 0;
+        buffer.get(tmp);
+        payloadBytes.add(tmp);
+        buffer.clear();
 
-        // 最后一个字符
-        byte lastByte = buffer.get(flg - 1);
+        // 读取payload中的数据
+        while (payloadFlg<payloadLength) {
+            int readLen= channel.read(buffer);
+            payloadFlg += readLen;
+            if (readLen==0){
+                continue;
+            }
 
-        while (flg > 0) {
-
-            if (flg==BUFFER_SIZE) {
-                data.add(buffer.array());
-                buffer.clear();
-            } else {
-                byte[] tmp = new byte[flg - 1];
+            buffer.flip();
+            if (payloadFlg<=payloadLength){
+                tmp = new  byte[readLen];
                 buffer.get(tmp);
-                data.add(tmp);
+                payloadBytes.add(tmp);
+                buffer.compact();
+            }else {
+                int tmpLen = payloadFlg-payloadLength;
+                tmp = new byte[tmpLen];
+                buffer.get(tmp);
+                payloadBytes.add(tmp);
+                buffer.compact();
+                buffer.flip();
+                // 读取randomPadding
+                buffer.get(randomPadding);
+                paddingFlg = buffer.remaining();
                 buffer.clear();
+            }
+        }
+
+        // 读取randomPadding
+        while (paddingFlg < paddingLength){
+            int readLen = channel.read(buffer);
+            paddingFlg += readLen;
+            if (readLen==0) {
+                continue;
+            }
+            buffer.flip();
+            if (paddingFlg <= packageLength){
+                tmp = new  byte[readLen];
+                buffer.get(tmp);
+                System.arraycopy(tmp,0,randomPadding,(paddingFlg-readLen), readLen);
+            }else {
+                int  tmpLen = paddingLength - paddingFlg;
+                tmp = new byte[tmpLen];
+                buffer.get(tmp);
+                System.arraycopy(tmp,0,randomPadding,(paddingFlg-readLen),tmpLen);
+            }
+            buffer.compact();
+        }
+
+        buffer.flip();
+        byte[]  mac = new byte[NONE.length];
+
+        int macFlg = 0;
+        if (buffer.remaining()>0){
+            macFlg = buffer.remaining();
+            tmp = new byte[macFlg];
+            buffer.get(tmp);
+            System.arraycopy(tmp,0,mac,0, macFlg);
+            buffer.clear();
+        }
+
+        while (macFlg<NONE.length){
+            int readLen = channel.read(buffer);
+            if (readLen==0){
                 break;
             }
-
-            if (lastByte==FLG_LF) break;
-
-            flg = channel.read(buffer);
-            if (flg == 0) break;
+            macFlg +=readLen;
             buffer.flip();
-            lastByte = buffer.get(flg-1);
-        }
-
-        if (lastByte == FLG_LF) {
-            log.info("{}", listBytesToString(data, StandardCharsets.UTF_8));
-            return;
-        }
-
-
-
-        /*log.debug("buffer可读数据{}", buffer.remaining());
-
-        //-- begin 读取 16 字节cookie
-        while (buffer.remaining() < 16) {
-            // 切换到写模式，清除已经读过的数据
-            buffer.compact();
-            channel.read(buffer);
-        }
-
-        byte[] cookieBytes = new byte[16];
-        buffer.get(cookieBytes, 0, 16);
-        log.info("server cookie (16位随机值):{}", cookieBytes);
-        // -- end
-
-
-        StringBuffer str = new StringBuffer();*/
-        /*int limit = buffer.limit();
-
-        byte endPoint1 = 10;
-        byte endPoint2 = 11;
-        byte endPoint = 0;
-
-        do {
-            if (buffer.hasRemaining()){
-                limit = buffer.limit();
-                endPoint = buffer.get(limit-1);
-                byte[] tmp = new byte[buffer.remaining()-buffer.position()];
+            if (macFlg <= NONE.length){
+                tmp = new byte[readLen];
                 buffer.get(tmp);
-                data.add(tmp);
+                System.arraycopy(tmp,0,mac,macFlg,readLen);
+            }else {
+                int tmpLen =  macFlg-NONE.length;
+                tmp = new byte[tmpLen];
+                buffer.get(tmp);
+                System.arraycopy(tmp,0,mac,(macFlg-readLen),tmpLen);
             }
+
             buffer.compact();
-            channel.read(buffer);
-            buffer.flip();
-        } while (endPoint!=endPoint1||endPoint!=endPoint2);*/
+        }
 
 
-        log.info("data:{}", new String(buffer.array()));
 
+        log.info("payload:{}", listBytesToString(payloadBytes,StandardCharsets.UTF_8));
+        log.info("random padding: {}", new String(randomPadding));
+        log.info("MAC: {}", new String(mac));
 
     }
 
@@ -178,6 +216,12 @@ public class SSHClient {
 
     }
 
+    /**
+     * 字节转化为String
+     * @param listBytes
+     * @param charset
+     * @return
+     */
     static String listBytesToString(List<byte[]> listBytes, Charset charset) {
 
         if (listBytes.isEmpty()){

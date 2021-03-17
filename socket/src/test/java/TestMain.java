@@ -9,7 +9,7 @@ import java.nio.ByteBuffer;
 @Slf4j
 public class TestMain {
     public static void main(String[] args) {
-        ByteBuffer buffer = ByteBuffer.allocate(10);
+       /* ByteBuffer buffer = ByteBuffer.allocate(10);
         buffer.put((byte) 1);
         buffer.put((byte) 2);
         buffer.put((byte) 3);
@@ -25,7 +25,9 @@ public class TestMain {
         buffer.compact();
         buffer.flip();
          b1 = buffer.get();
-        log.info("{}",b1);
+        log.info("{}",b1);*/
+
+        System.out.println(Math.max(1,2));
 
 
     }

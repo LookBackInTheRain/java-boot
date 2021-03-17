@@ -5,6 +5,9 @@ package club.yuit.ssh.consts;
  * date 2021-03-14 13:14
  **/
 public class MessageNumber {
+
+    public final static  byte SSH_MSG_KEXINIT = 20;
+
     public final static byte SSH_MSG_GLOBAL_REQUEST = 80;
     public final static byte SSH_MSG_REQUEST_SUCCESS = 81;
     public final static byte SSH_MSG_REQUEST_FAILURE = 82;

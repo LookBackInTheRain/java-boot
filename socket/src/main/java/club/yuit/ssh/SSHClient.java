@@ -5,9 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
-import java.nio.channels.SelectionKey;
-import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -23,8 +20,9 @@ public class SSHClient {
 
     public static final byte[] VERSION = "SSH-2.0-UitSSH-0.1\n".getBytes();
     public static final byte FLG_LF = 0xA;
-    public static final int BUFFER_SIZE =  256;
-    public static final byte[] NONE =  "none".getBytes();
+    public static  final int FLG_EXIT_CODE = -999;
+    public static final int BUFFER_SIZE = 256;
+    public static final byte[] NONE = "none".getBytes();
 
     public static void main(String[] args) throws IOException {
 
@@ -55,7 +53,6 @@ public class SSHClient {
         buffer.flip();
         // 判断在服务端发送版本号之前是否存在其他信息
         if (flg >= 3 && (buffer.get(0) != 'S' && buffer.get(1) != 'S' && buffer.get(2) != 'H' && buffer.get(3) != '-')) {
-
             if (buffer.get(buffer.limit() - 1) == FLG_LF) {
                 byte[] tmp = new byte[buffer.limit() - 2];
                 buffer.get(tmp);
@@ -73,10 +70,10 @@ public class SSHClient {
         buffer.get(tmp);
         log.info("服务端版本号:{}", new String(tmp));
 
-        if(flg>=8){
+        if (flg >= 8) {
             byte maxVersionNumber = buffer.get(4);
             byte minVersionNumber = buffer.get(6);
-            if (maxVersionNumber!='2'&&minVersionNumber!='0'){
+            if (maxVersionNumber != '2' && minVersionNumber != '0') {
                 log.info("客户端只支持SSH-2.0");
                 channel.close();
                 throw new IOException("Client support ssh-2.0");
@@ -98,7 +95,7 @@ public class SSHClient {
         List<byte[]> data = new ArrayList<>();
         int flg = channel.read(buffer);
         // 切换到读模式
-        while (flg<5){
+        while (flg < 6) {
             flg += channel.read(buffer);
         }
 
@@ -109,139 +106,233 @@ public class SSHClient {
         // 填充长度
         byte paddingLength = buffer.get();
         log.info("padding length {}", paddingLength);
-        int payloadLength = packageLength - paddingLength -1;
-        List<byte[]> payloadBytes = new ArrayList<>();
-        byte[] randomPadding = new byte[paddingLength];
+        int payloadLength = packageLength - paddingLength - 1;
+        /**
+         * 消息码
+         * {@link club.yuit.ssh.consts.MessageNumber}
+         */
+        byte messageCode = buffer.get();
+        log.info("Message Code: {}", messageCode);
         buffer.compact();
         buffer.flip();
-        byte[] tmp = new byte[buffer.remaining()];
-        int payloadFlg = tmp.length;
-        int paddingFlg = 0;
-        buffer.get(tmp);
-        payloadBytes.add(tmp);
-        buffer.clear();
+        /**
+         * 16 位随机cookie值
+         */
+        byte[] cookie = new byte[16];
 
-        // 读取payload中的数据
-        while (payloadFlg<payloadLength) {
-            int readLen= channel.read(buffer);
-            payloadFlg += readLen;
-            if (readLen==0){
-                continue;
-            }
-
-            buffer.flip();
-            if (payloadFlg<=payloadLength){
-                tmp = new  byte[readLen];
-                buffer.get(tmp);
-                payloadBytes.add(tmp);
-                buffer.compact();
-            }else {
-                int tmpLen = payloadFlg-payloadLength;
-                tmp = new byte[tmpLen];
-                buffer.get(tmp);
-                payloadBytes.add(tmp);
-                buffer.compact();
-                buffer.flip();
-                // 读取randomPadding
-                buffer.get(randomPadding);
-                paddingFlg = buffer.remaining();
-                buffer.clear();
-            }
-        }
-
-        // 读取randomPadding
-        while (paddingFlg < paddingLength){
-            int readLen = channel.read(buffer);
-            paddingFlg += readLen;
-            if (readLen==0) {
-                continue;
-            }
-            buffer.flip();
-            if (paddingFlg <= packageLength){
-                tmp = new  byte[readLen];
-                buffer.get(tmp);
-                System.arraycopy(tmp,0,randomPadding,(paddingFlg-readLen), readLen);
-            }else {
-                int  tmpLen = paddingLength - paddingFlg;
-                tmp = new byte[tmpLen];
-                buffer.get(tmp);
-                System.arraycopy(tmp,0,randomPadding,(paddingFlg-readLen),tmpLen);
-            }
+        while (buffer.remaining() < 16) {
             buffer.compact();
+            channel.read(buffer);
+            buffer.flip();
         }
 
+        buffer.get(cookie);
+        log.info("cookie: {}", new String(cookie));
+        int payloadFlg = cookie.length;
+
+
+        // 交换算法列表长度
+        buffer.compact();
         buffer.flip();
-        byte[]  mac = new byte[NONE.length];
+        int kexAlgorithmsLen = readInt(channel, buffer);
+        log.info("Kex Algorithms length: {}", kexAlgorithmsLen);
+        List<byte[]> kexAlgorithmBytes = readListBytes(channel, buffer, kexAlgorithmsLen);
+        log.info("Kex Algorithms:{}", listBytesToString(kexAlgorithmBytes, StandardCharsets.UTF_8));
 
-        int macFlg = 0;
-        if (buffer.remaining()>0){
-            macFlg = buffer.remaining();
-            tmp = new byte[macFlg];
-            buffer.get(tmp);
-            System.arraycopy(tmp,0,mac,0, macFlg);
-            buffer.clear();
-        }
+        // server_host_key_algorithms
+        int serHKAlgorithmsLen = readInt(channel, buffer);
+        List<byte[]> serHKAlgorithmBytes = readListBytes(channel, buffer, serHKAlgorithmsLen);
+        log.info("server_host_key_algorithms: {}", listBytesToString(serHKAlgorithmBytes, StandardCharsets.UTF_8));
 
-        while (macFlg<NONE.length){
-            int readLen = channel.read(buffer);
-            if (readLen==0){
-                break;
-            }
-            macFlg +=readLen;
+
+        // encryption_algorithms_client_to_server
+        int encryptionAlgorithmsCSLen = readInt(channel, buffer);
+        List<byte[]> encryptionAlgorithmCSBytes = readListBytes(channel, buffer, encryptionAlgorithmsCSLen);
+        log.info("encryption_algorithms_client_to_server:{}", listBytesToString(encryptionAlgorithmCSBytes, StandardCharsets.UTF_8));
+
+
+        // encryption_algorithms_server_to_client
+        int encryptionAlgorithmsSCLen = readInt(channel, buffer);
+        List<byte[]> encryptionAlgorithmSCBytes = readListBytes(channel, buffer, encryptionAlgorithmsSCLen);
+        log.info("encryption_algorithms_server_to_client: {}", listBytesToString(encryptionAlgorithmSCBytes, StandardCharsets.UTF_8));
+
+
+        // mac_algorithms_client_to_server
+        int macAlgorithmsCSLen = readInt(channel, buffer);
+        List<byte[]> macAlgorithmsCSBytes = readListBytes(channel, buffer, macAlgorithmsCSLen);
+        log.info("mac_algorithms_client_to_server: {}", listBytesToString(macAlgorithmsCSBytes, StandardCharsets.UTF_8));
+
+
+        // mac_algorithms_server_to_client
+        int macAlgorithmsSCLen = readInt(channel, buffer);
+        List<byte[]> macAlgorithmsSCBytes = readListBytes(channel, buffer, macAlgorithmsSCLen);
+        log.info("mac_algorithms_server_to_client: {}", listBytesToString(macAlgorithmsSCBytes, StandardCharsets.UTF_8));
+
+        // compression_algorithms_client_to_server
+        int compressionAlgorithmsCSLen = readInt(channel, buffer);
+        List<byte[]> compressionAlgorithmsCSBytes = readListBytes(channel, buffer, compressionAlgorithmsCSLen);
+        log.info("compression_algorithms_client_to_server: {}", listBytesToString(compressionAlgorithmsCSBytes, StandardCharsets.UTF_8));
+
+        // compression_algorithms_server_to_client
+        int compressionAlgorithmsSCLen = readInt(channel, buffer);
+        List<byte[]> compressionAlgorithmsSCBytes = readListBytes(channel, buffer, compressionAlgorithmsSCLen);
+        log.info("compression_algorithms_server_to_client: {}", listBytesToString(compressionAlgorithmsSCBytes, StandardCharsets.UTF_8));
+
+        // languages_client_to_server
+        int langCSLen = readInt(channel, buffer);
+        if (langCSLen > 0) {
+            byte[] langCSBytes = readBytes(channel, buffer, langCSLen);
+            log.info("languages_client_to_server: {}", new String(langCSBytes, StandardCharsets.UTF_8));
+        }else {
+            log.info("languages_client_to_server:");
             buffer.flip();
-            if (macFlg <= NONE.length){
-                tmp = new byte[readLen];
-                buffer.get(tmp);
-                System.arraycopy(tmp,0,mac,macFlg,readLen);
-            }else {
-                int tmpLen =  macFlg-NONE.length;
-                tmp = new byte[tmpLen];
-                buffer.get(tmp);
-                System.arraycopy(tmp,0,mac,(macFlg-readLen),tmpLen);
-            }
+        }
 
-            buffer.compact();
+        // languages_server_to_client
+        int langSCLen = readInt(channel, buffer);
+        if (langSCLen > 0) {
+            byte[] langCSBytes = readBytes(channel, buffer, langSCLen);
+            log.info("languages_server_to_client: {}", new String(langCSBytes, StandardCharsets.UTF_8));
+        }else {
+            log.info("languages_server_to_client: ");
         }
 
 
+        byte firstKexPacketFollows = readBytes(channel, buffer, 1)[0];
+        log.info("First KEX Packet Follows: {}", firstKexPacketFollows);
+        buffer.compact();
+        byte[] reserved = readBytes(channel, buffer,4);
+        log.info("reserved: {}", reserved);
 
-        log.info("payload:{}", listBytesToString(payloadBytes,StandardCharsets.UTF_8));
-        log.info("random padding: {}", new String(randomPadding));
-        log.info("MAC: {}", new String(mac));
+        buffer.compact();
+        byte[] padding = readBytes(channel, buffer, paddingLength);
+        buffer.clear();
+        log.info("padding String: {}", new String(padding, StandardCharsets.UTF_8));
+
+
+
 
     }
 
+    static List<byte[]> readListBytes(SocketChannel channel, ByteBuffer buffer, int readLen) throws IOException {
 
-    static  void handleVersionDiffer(){
+
+        List<byte[]> dataBytes = new ArrayList<>();
+        int flg = 0;
+        byte[] tmp = null;
+        if (readLen == 0) {
+            return null;
+        }
+
+        buffer.flip();
+        while (flg<readLen) {
+            int remaining = buffer.remaining();
+            flg += remaining;
+            if (remaining > 0 && flg <= readLen) {
+                tmp = new byte[remaining];
+                buffer.get(tmp);
+                dataBytes.add(tmp);
+                buffer.compact();
+                buffer.flip();
+                continue;
+            } else if (remaining > 0) {
+                flg -= remaining;
+                tmp = new byte[readLen - flg];
+                buffer.get(tmp);
+                dataBytes.add(tmp);
+                buffer.compact();
+                buffer.flip();
+                break;
+            }
+
+            buffer.compact();
+            channel.read(buffer);
+            buffer.flip();
+        }
+
+        return dataBytes;
+    }
+
+    static byte[] readBytes(SocketChannel channel, ByteBuffer buffer, int readLen) throws IOException {
+        byte[] dataBytes = new byte[readLen];
+        int flg = 0;
+        byte[] tmp = null;
+        buffer.flip();
+
+        while (flg<readLen) {
+            int remaining = buffer.remaining();
+            flg += remaining;
+            if (remaining > 0 && flg <= readLen) {
+                tmp = new byte[remaining];
+                buffer.get(tmp);
+                System.arraycopy(tmp, 0, dataBytes, (flg-remaining), tmp.length);
+                buffer.compact();
+                buffer.flip();
+                continue;
+            } else if (remaining > 0) {
+                flg -= remaining;
+                tmp = new byte[readLen - flg];
+                buffer.get(tmp);
+                System.arraycopy(tmp, 0, dataBytes, flg, readLen - flg);
+                buffer.compact();
+                buffer.flip();
+                break;
+            }
+
+
+            buffer.compact();
+            channel.read(buffer);
+            buffer.flip();
+        }
+
+        return dataBytes;
+    }
+
+    static int readInt(SocketChannel channel, ByteBuffer buffer) throws IOException {
+        while (buffer.remaining() < 4) {
+            buffer.compact();
+            channel.read(buffer);
+            buffer.flip();
+        }
+        int data = buffer.getInt();
+        buffer.compact();
+
+        return data;
+    }
+
+
+    static void handleVersionDiffer() {
 
     }
 
     /**
      * 字节转化为String
+     *
      * @param listBytes
      * @param charset
      * @return
      */
     static String listBytesToString(List<byte[]> listBytes, Charset charset) {
 
-        if (listBytes.isEmpty()){
-            return  null;
+        if (listBytes.isEmpty()) {
+            return null;
         }
 
         int len = 0;
         int size = listBytes.size();
         if (size == 1) {
             len = listBytes.get(0).length;
-        }else {
-            len = (size-1) * BUFFER_SIZE+ listBytes.get(size-1).length;
+        } else {
+            len = (size - 1) * BUFFER_SIZE + listBytes.get(size - 1).length;
         }
 
         byte[] dataBytes = new byte[len];
         int destPos = 0;
         for (byte[] item : listBytes) {
-            System.arraycopy(item,0,dataBytes,destPos,item.length);
-            destPos = (item.length-1) + destPos;
-        };
+            System.arraycopy(item, 0, dataBytes, destPos, item.length);
+            destPos = (item.length - 1) + destPos;
+        }
+        ;
 
         return new String(dataBytes, charset);
     }

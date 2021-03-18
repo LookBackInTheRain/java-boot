@@ -1,6 +1,9 @@
+import club.yuit.ssh.encryption.*;
+import com.sun.xml.internal.bind.api.impl.NameConverter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author yuit
@@ -9,25 +12,13 @@ import java.nio.ByteBuffer;
 @Slf4j
 public class TestMain {
     public static void main(String[] args) {
-       /* ByteBuffer buffer = ByteBuffer.allocate(10);
-        buffer.put((byte) 1);
-        buffer.put((byte) 2);
-        buffer.put((byte) 3);
-        buffer.put((byte) 4);
-        buffer.put((byte) 5);
-        buffer.put((byte) 6);
-        buffer.put((byte) 7);
-        buffer.put((byte) 8);
 
-        buffer.flip();
-        int b1 = buffer.getInt();
-        log.info("{}",b1);
-        buffer.compact();
-        buffer.flip();
-         b1 = buffer.get();
-        log.info("{}",b1);*/
+        AES cbc =  AES192CBC.getAES();
+        byte[] data = "123123123123".getBytes(StandardCharsets.UTF_8);
+        byte[] ec = cbc.encode(data);
+        byte[] dc = cbc.decode(ec);
 
-        System.out.println(Math.max(1,2));
+        System.out.println();
 
 
     }

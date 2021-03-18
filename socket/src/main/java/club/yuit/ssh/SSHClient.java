@@ -1,6 +1,8 @@
 package club.yuit.ssh;
 
 import lombok.extern.slf4j.Slf4j;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -9,6 +11,7 @@ import java.nio.channels.SocketChannel;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 /**
@@ -127,7 +130,9 @@ public class SSHClient {
         }
 
         buffer.get(cookie);
-        log.info("cookie: {}", new String(cookie));
+
+
+        log.info("cookie: {}",  bytesToHex(cookie));
         int payloadFlg = cookie.length;
 
 
@@ -213,6 +218,20 @@ public class SSHClient {
 
 
     }
+    public static String bytesToHex(byte[] bytes) {
+        StringBuffer sb = new StringBuffer();
+        for(int i = 0; i < bytes.length; i++) {
+            String hex = Integer.toHexString(bytes[i] & 0xFF);
+            if(hex.length() < 2){
+                sb.append(0);
+            }
+            sb.append(hex);
+        }
+        return sb.toString();
+    }
+
+
+
 
     static List<byte[]> readListBytes(SocketChannel channel, ByteBuffer buffer, int readLen) throws IOException {
 

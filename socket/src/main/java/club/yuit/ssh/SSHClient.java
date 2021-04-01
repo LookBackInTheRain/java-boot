@@ -214,10 +214,10 @@ public class SSHClient {
         buffer.clear();
         log.info("padding String: {}", new String(padding, StandardCharsets.UTF_8));
 
-
-
-
     }
+
+
+
     public static String bytesToHex(byte[] bytes) {
         StringBuffer sb = new StringBuffer();
         for(int i = 0; i < bytes.length; i++) {

@@ -5,7 +5,7 @@ package club.yuit.ssh.encryption;
  * date 2021-03-18 21:33
  **/
 public class AES128CTR extends AbstractAES {
-    private final static String RULE = "AES/CTR/NoPadding";
+    private final static String RULE = "AES/CTR/PKCS5Padding";
     private final static int LENGTH = 128;
     private final static AES128CTR CBC =  new AES128CTR();
 

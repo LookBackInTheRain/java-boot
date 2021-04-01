@@ -6,7 +6,7 @@ package club.yuit.ssh.encryption;
  **/
 public class AES128CBC extends AbstractAES {
 
-    private final static String RULE = "AES/CBC/NoPadding";
+    private final static String RULE = "AES/CBC/PKCS5Padding";
     private final static int LENGTH = 128;
     private final static  AES128CBC CBC =  new AES128CBC();
 

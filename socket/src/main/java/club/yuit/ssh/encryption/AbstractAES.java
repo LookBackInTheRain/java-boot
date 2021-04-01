@@ -1,5 +1,7 @@
 package club.yuit.ssh.encryption;
 
+import javax.crypto.SecretKey;
+
 /**
  * @author yuit
  * date 2021-03-18 21:24
@@ -15,13 +17,13 @@ public abstract class AbstractAES implements AES {
     }
 
     @Override
-    public byte[] encode(byte[] data) {
-        return  AESUtil.encode(rule,data,length);
+    public byte[] encode(byte[] data, SecretKey key) {
+        return  AESUtil.encode(rule,data,length, key);
     }
 
     @Override
-    public byte[] decode(byte[] data) {
-        return  AESUtil.decode(rule,data,length);
+    public byte[] decode(byte[] data,SecretKey key) {
+        return  AESUtil.decode(rule,data,length, key);
     }
 
 

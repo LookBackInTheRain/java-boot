@@ -2,24 +2,55 @@ import club.yuit.ssh.encryption.*;
 import com.sun.xml.internal.bind.api.impl.NameConverter;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.crypto.*;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.*;
 
-/**
- * @author yuit
- * date 2021-03-13 20:58
- **/
-@Slf4j
+
 public class TestMain {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
 
-        AES cbc =  AES192CBC.getAES();
-        byte[] data = "123123123123".getBytes(StandardCharsets.UTF_8);
-        byte[] ec = cbc.encode(data);
-        byte[] dc = cbc.decode(ec);
+        String padding = "AES/CBC/PKCS5Padding";
+        String data = "123456789asdasdasdasdasdasdasdasdasd";
 
-        System.out.println();
+        SecretKey key = AESUtil.ketGenerator("ABCHDGDJHJD87234234".getBytes(), 192);
+        AES aes = AES256CTR.getAES();
+        byte[] res = aes.encode(data.getBytes(), key);
+        byte[] decRes = aes.decode(res,key);
+        System.out.println("");
+    }
 
+
+    static void decode(byte[] src) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+        KeyGenerator keygen = KeyGenerator.getInstance("AES");
+        SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
+        random.setSeed("AES/CBC/PKCS5Padding".getBytes());
+        keygen.init(192, random);
+
+        SecretKey originalKey = keygen.generateKey();
+
+        byte[] raw = originalKey.getEncoded();
+
+        SecretKeySpec spec = new SecretKeySpec(raw, "AES");
+
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+
+        cipher.init(Cipher.DECRYPT_MODE, spec);
+
+        byte[] res = cipher.doFinal(src);
+
+        if (res != null) {
+            System.out.println(new String(res));
+        }
 
     }
+
+
 }
+

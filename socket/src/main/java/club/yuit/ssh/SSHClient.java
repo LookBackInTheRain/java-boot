@@ -30,7 +30,7 @@ public class SSHClient {
     public static void main(String[] args) throws IOException {
 
 
-        SocketChannel channel = SocketChannel.open(new InetSocketAddress("192.168.1.101", 22));
+        SocketChannel channel = SocketChannel.open(new InetSocketAddress("159.75.13.83", 22));
         channel.configureBlocking(true);
 
         if (channel.isConnected()) {
@@ -217,6 +217,9 @@ public class SSHClient {
     }
 
 
+    static void keyExInit(SocketChannel channel){
+
+    }
 
     public static String bytesToHex(byte[] bytes) {
         StringBuffer sb = new StringBuffer();
@@ -351,7 +354,6 @@ public class SSHClient {
             System.arraycopy(item, 0, dataBytes, destPos, item.length);
             destPos = (item.length - 1) + destPos;
         }
-        ;
 
         return new String(dataBytes, charset);
     }

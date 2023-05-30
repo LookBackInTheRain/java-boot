@@ -1,8 +1,11 @@
 package club.yuit.basic.security.hamc;
 
 import cn.hutool.core.util.HexUtil;
+import cn.hutool.crypto.Mode;
+import cn.hutool.crypto.Padding;
 import cn.hutool.crypto.digest.HMac;
 import cn.hutool.crypto.digest.HmacAlgorithm;
+import cn.hutool.crypto.symmetric.AES;
 
 import javax.crypto.Mac;
 import java.io.ByteArrayInputStream;
@@ -138,6 +141,8 @@ public class HMACUtils {
         System.out.println(hmacTxt);
 
         HMac mac = new HMac(HmacAlgorithm.HmacSHA256, secret.getBytes(StandardCharsets.UTF_8));
+
+        AES aes = new AES(Mode.CBC, Padding.PKCS5Padding);
 
         System.out.println(mac.digestHex(text));
 

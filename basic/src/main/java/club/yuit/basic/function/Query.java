@@ -14,6 +14,10 @@ public interface Query<T,R>  {
 
 }
 
+
+
+
+
 class LamQuery<T> implements Query<LamQuery<T>,FunctionObject<T,?>>{
 
 
@@ -23,8 +27,7 @@ class LamQuery<T> implements Query<LamQuery<T>,FunctionObject<T,?>>{
         Class<?> clazz = c[0].getClass();
 
         Type[] tys = clazz.getGenericInterfaces();
-
-        System.out.println(c);
+        System.out.println();
 
         return this;
     }

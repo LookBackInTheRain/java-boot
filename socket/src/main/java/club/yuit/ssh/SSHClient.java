@@ -1,8 +1,7 @@
 package club.yuit.ssh;
 
 import lombok.extern.slf4j.Slf4j;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
+
 
 import java.io.IOException;
 import java.net.InetSocketAddress;

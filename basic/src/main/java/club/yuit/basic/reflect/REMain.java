@@ -5,6 +5,7 @@ import club.yuit.basic.reflect.jdk.ProxyImpl;
 import club.yuit.basic.reflect.jdk.ProxyInvocationHandler;
 
 import java.lang.reflect.Proxy;
+import java.util.ArrayList;
 
 /**
  * @author yuit
@@ -14,9 +15,12 @@ public class REMain {
 
     public static void main(String[] args) {
 
-        ProxyInvocationHandler pxy = new ProxyInvocationHandler(new ProxyImpl());
+        /*ProxyInvocationHandler pxy = new ProxyInvocationHandler(new ProxyImpl());
         IProxy p = (IProxy) Proxy.newProxyInstance(REMain.class.getClassLoader(),new Class[]{IProxy.class},pxy);
-        p.sayHello();
+        p.sayHello();*/
+
+        System.out.println(4>>1);
+        new ArrayList<>();
     }
 
 }

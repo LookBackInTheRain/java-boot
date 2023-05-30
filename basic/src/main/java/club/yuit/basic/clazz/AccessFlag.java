@@ -1,5 +1,6 @@
 package club.yuit.basic.clazz;
 
+import cn.hutool.core.util.HexUtil;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,8 +9,7 @@ import lombok.Setter;
  * @date 2023/5/30
  **/
 
-@Getter
-@Setter
+
 public class AccessFlag {
 
     /**
@@ -23,6 +23,18 @@ public class AccessFlag {
     private String hex;
 
 
+    public int getValue() {
+        return value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
+        this.hex = HexUtil.toHex(value);
+    }
+
+    public String getHex() {
+        return hex;
+    }
 
 
 }

@@ -38,7 +38,7 @@ public class Struct {
     /**
      * 访问标志
      */
-    private AccessFlag accessFlag;
+    private AccessFlags accessFlags;
 
 
 

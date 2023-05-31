@@ -41,5 +41,8 @@ public class Struct {
     private AccessFlags accessFlags;
 
 
-
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }

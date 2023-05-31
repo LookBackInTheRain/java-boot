@@ -28,4 +28,13 @@ public abstract class AbstractConstantInfo implements ConstantInfo {
         ConstPoolParser annotation = this.getClass().getAnnotation(ConstPoolParser.class);
         return annotation!=null && annotation.value()==tag;
     }
+
+    public int getTag(){
+        ConstPoolParser annotation = this.getClass().getAnnotation(ConstPoolParser.class);
+        if (annotation==null){
+            throw new RuntimeException("not found tag");
+        }
+
+        return annotation.value();
+    }
 }

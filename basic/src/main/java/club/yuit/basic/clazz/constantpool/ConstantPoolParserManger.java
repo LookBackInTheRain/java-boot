@@ -1,5 +1,6 @@
 package club.yuit.basic.clazz.constantpool;
 
+import club.yuit.basic.clazz.Struct;
 import club.yuit.basic.clazz.annotations.ConstPoolParser;
 import club.yuit.basic.clazz.constantpool.parser.ConstantInfo;
 import cn.hutool.core.util.ClassUtil;
@@ -20,8 +21,13 @@ public class ConstantPoolParserManger {
     private  List<ConstantInfo> list;
     private final static Map<Integer,Class<?>> PARSERS_CLASS = new HashMap<>(19);
 
-    public ConstantPoolParserManger(List<ConstantInfo> list) {
-        this.list = list;
+    public ConstantPoolParserManger(Struct struct) {
+        if (struct.getCpInfo()!=null){
+            this.list=struct.getCpInfo();
+        }else {
+            this.list = new ArrayList<>();
+            struct.setCpInfo(list);
+        }
         loadParserClass("club.yuit.basic.clazz.constantpool.parser");
     }
 
@@ -58,14 +64,6 @@ public class ConstantPoolParserManger {
         return null;
     }
 
-    public static void main(String[] args) {
-        List<ConstantInfo> l = new ArrayList<>();
-
-        ConstantPoolParserManger m = new ConstantPoolParserManger(l);
-        ConstantInfo chose = m.chose(8);
-        System.out.println(chose);
-
-    }
 
 
 }

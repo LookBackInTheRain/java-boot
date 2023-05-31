@@ -26,6 +26,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         File f = new File("/Users/yuit/dev/yuit/java-boot/basic/files/TestClazz.class");
 
+        Struct struct = new Struct();
 
         FileInputStream in = new FileInputStream(f);
         byte[] buf4 = new byte[4];
@@ -55,8 +56,8 @@ public class Main {
         // constant_pool
         System.out.println("Constant_Pool:");
         int constantPoolFlg = 1;
-        List<ConstantInfo> poolList = new ArrayList<>();
-        ConstantPoolParserManger constantPoolParser = new ConstantPoolParserManger(poolList);
+
+        ConstantPoolParserManger constantPoolParser = new ConstantPoolParserManger(struct);
         while (constantPoolFlg < constantPoolCount) {
             constantPoolFlg++;
             clear(buf4);
@@ -65,7 +66,7 @@ public class Main {
             constantPoolParser.parse(tag, in);
         }
 
-        for (int i=0;i<poolList.size();i++) {
+       /* for (int i=0;i<poolList.size();i++) {
             System.out.print("\t#");
             if (i<9){
                 System.out.print("0"+(i+1)+"=");
@@ -74,7 +75,7 @@ public class Main {
             }
             poolList.get(i).print();
             System.out.println();
-        }
+        }*/
 
         clear(buf4);
         in.read(buf4,2,2);
@@ -87,7 +88,7 @@ public class Main {
         in.read(buf4,2,2);
         int superClassIndex = ByteUtil.bytesToInt(buf4,ByteOrder.BIG_ENDIAN);
         clear(buf4);
-        System.out.println(poolList.get(classIndex-1).getValue()+" extends " + poolList.get(superClassIndex-1).getValue());
+        //System.out.println(poolList.get(classIndex-1).getValue()+" extends " + poolList.get(superClassIndex-1).getValue());
         in.read(buf4,2,2);
         int implsIndex = ByteUtil.bytesToInt(buf4,ByteOrder.BIG_ENDIAN);
         in.close();

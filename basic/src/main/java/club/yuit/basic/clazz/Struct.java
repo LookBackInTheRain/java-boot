@@ -4,6 +4,7 @@ import club.yuit.basic.clazz.constantpool.parser.ConstantInfo;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -13,6 +14,9 @@ import java.util.List;
 @Getter
 @Setter
 public class Struct {
+
+    private InputStream stream;
+
     /**
      * 魔数 4 字节 CAFEBABE
      */

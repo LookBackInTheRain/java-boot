@@ -1,40 +1,23 @@
 package club.yuit.basic.clazz.constantpool.parser;
 
-import club.yuit.basic.clazz.annotations.ConstPoolParser;
+import club.yuit.basic.clazz.Struct;
+import club.yuit.basic.clazz.annotations.ConstPoolLexer;
+import club.yuit.basic.clazz.parser.AbstractParser;
 
-import java.util.List;
+import java.io.InputStream;
 
 /**
  * @author yuit
  * @date 2022/5/24
  **/
-public abstract class AbstractConstantInfo implements ConstantInfo {
+public abstract class AbstractConstantInfo extends AbstractParser  {
 
 
-    private List<ConstantInfo> pools;
 
-    public AbstractConstantInfo(List<ConstantInfo> pools){
-        this.pools = pools;
+   private Struct struct;
+
+    public AbstractConstantInfo(Struct struct) {
+        super(struct);
     }
 
-
-
-    public List<ConstantInfo> getPools() {
-        return pools;
-    }
-
-
-    public boolean access(int tag) {
-        ConstPoolParser annotation = this.getClass().getAnnotation(ConstPoolParser.class);
-        return annotation!=null && annotation.value()==tag;
-    }
-
-    public int getTag(){
-        ConstPoolParser annotation = this.getClass().getAnnotation(ConstPoolParser.class);
-        if (annotation==null){
-            throw new RuntimeException("not found tag");
-        }
-
-        return annotation.value();
-    }
 }

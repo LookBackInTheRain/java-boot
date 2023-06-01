@@ -1,13 +1,11 @@
 package club.yuit.basic.clazz.parser;
 
-import club.yuit.basic.clazz.annotations.Lexer;
+import club.yuit.basic.clazz.Struct;
 import cn.hutool.core.util.ByteUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.nio.channels.FileChannel;
 
 /**
  * @author yuit
@@ -15,32 +13,25 @@ import java.nio.channels.FileChannel;
  **/
 public abstract class AbstractParser implements Parser {
 
-    final int length;
-    ByteBuffer buffer;
 
 
-    public AbstractParser(FileChannel channel) {
-        length = getLexer().length();
-        if (length>0){
-            buffer = ByteBuffer.allocate(length);
-        }
 
-        read(channel);
+    private Struct struct;
+
+    public AbstractParser( Struct struct) {
+        this.struct = struct;
     }
 
+    public abstract void doParser(Struct struct);
+
+
     @Override
-    public ByteBuffer read(FileChannel in) {
+    public int readByte() {
         try {
-
-            if (buffer==null){
-
+            if (getStream().available()<1){
+                throw new RuntimeException();
             }
-
-            int read = 0;
-            while (read != length) {
-                read += in.read(buffer);
-            }
-            return buffer;
+            return this.getStream().read();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -48,49 +39,66 @@ public abstract class AbstractParser implements Parser {
 
 
 
-    public Lexer getLexer() {
-        Lexer lexer = this.getClass().getAnnotation(Lexer.class);
-        if (lexer == null) {
-            throw new IllegalStateException("not fount Lexer annotation");
-        }
-
-        return lexer;
-    }
-
-
-    public short readUnsignedByte() {
-        byte[] tmp = new byte[2];
-        buffer.get(tmp, 1, 1);
-        return ByteUtil.bytesToShort(tmp, ByteOrder.BIG_ENDIAN);
-    }
-
-    public byte[] readBytes(int length) {
-        return readBytes(length,0,0);
-    }
-
-    public byte[] readBytes(int length,int index,int offset) {
-        byte[] tmp = new byte[length];
-        buffer.get(index,tmp,offset,length);
-        return tmp;
-    }
-
-    public int readUnsignedShort() {
-        byte[] tmp = new byte[4];
-        buffer.get(tmp, 2, 2);
-        return ByteUtil.bytesToInt(tmp, ByteOrder.BIG_ENDIAN);
-    }
-
-    public byte readByte() {
-        return buffer.get();
-    }
-
+    @Override
     public short readShort() {
-        return buffer.getShort();
+        try {
+            if (getStream().available()<2){
+                throw new RuntimeException();
+            }
+            byte[] b = this.getStream().readNBytes(2);
+            return ByteUtil.bytesToShort(b,ByteOrder.BIG_ENDIAN);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
+    @Override
+    public int readUnsignedShort() {
+        try {
+            byte[] tmp = new byte[4];
+            if (getStream().available()<2){
+                throw new RuntimeException();
+            }
+            int read = 0;
+            while (read!=2){
+                read+=getStream().read(tmp,2,2);
+            }
+            return ByteUtil.bytesToInt(tmp,ByteOrder.BIG_ENDIAN);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
+    @Override
     public int readInt() {
-        return buffer.getInt();
+        try {
+            if (getStream().available()<4){
+                throw new RuntimeException();
+            }
+            byte[] tmp =  this.getStream().readNBytes(4);
+            return ByteUtil.bytesToInt(tmp);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
+
+
+    @Override
+    public byte[] readBytes(int length) {
+        try {
+            return this.getStream().readNBytes(length);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public InputStream getStream() {
+        return this.struct.getStream();
+    }
+
+    public Struct getStruct() {
+        return struct;
+    }
 }

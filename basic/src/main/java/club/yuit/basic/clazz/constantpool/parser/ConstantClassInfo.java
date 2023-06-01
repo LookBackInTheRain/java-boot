@@ -1,6 +1,8 @@
 package club.yuit.basic.clazz.constantpool.parser;
 
-import club.yuit.basic.clazz.annotations.ConstPoolParser;
+import club.yuit.basic.clazz.Struct;
+import club.yuit.basic.clazz.annotations.ConstPoolLexer;
+import club.yuit.basic.clazz.parser.AbstractParser;
 import cn.hutool.core.util.ByteUtil;
 import lombok.Getter;
 
@@ -14,23 +16,21 @@ import java.util.List;
  * @date 2022/5/23
  **/
 @Getter
-@ConstPoolParser(7)
-public class ConstantClassInfo extends AbstractConstantInfo {
+@ConstPoolLexer(7)
+public class ConstantClassInfo extends AbstractParser {
 
     private int nameIndex;
 
-    public ConstantClassInfo(List<ConstantInfo> pools) {
-        super(pools);
+    private Struct struct;
+
+    public ConstantClassInfo(Struct struct) {
+        super(struct);
+
     }
 
-
-
-
     @Override
-    public void handle(InputStream in) throws IOException {
-        byte[] buf4 = new byte[4];
-        in.read(buf4, 2, 2);
-        this.nameIndex = ByteUtil.bytesToInt(buf4, ByteOrder.BIG_ENDIAN);
+    public void doParser() throws IOException {
+       this.nameIndex = readUnsignedShort();
     }
 
     @Override

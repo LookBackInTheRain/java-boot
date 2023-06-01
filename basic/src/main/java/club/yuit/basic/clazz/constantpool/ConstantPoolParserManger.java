@@ -1,7 +1,7 @@
 package club.yuit.basic.clazz.constantpool;
 
 import club.yuit.basic.clazz.Struct;
-import club.yuit.basic.clazz.annotations.ConstPoolParser;
+import club.yuit.basic.clazz.annotations.ConstPoolLexer;
 import club.yuit.basic.clazz.constantpool.parser.ConstantInfo;
 import cn.hutool.core.util.ClassUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -39,9 +39,9 @@ public class ConstantPoolParserManger {
 
     public void loadParserClass(String pkg){
         log.info("loading parser classes");
-        Set<Class<?>> classes = ClassUtil.scanPackage(pkg, aClass -> aClass.getAnnotation(ConstPoolParser.class) != null);
+        Set<Class<?>> classes = ClassUtil.scanPackage(pkg, aClass -> aClass.getAnnotation(ConstPoolLexer.class) != null);
         classes.forEach(i->{
-            ConstPoolParser annotation = i.getAnnotation(ConstPoolParser.class);
+            ConstPoolLexer annotation = i.getAnnotation(ConstPoolLexer.class);
             PARSERS_CLASS.put(annotation.value(),i);
         });
         log.info("loaded parser classes,size:{}",classes.size());

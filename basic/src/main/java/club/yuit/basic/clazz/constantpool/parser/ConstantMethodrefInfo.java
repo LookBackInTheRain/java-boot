@@ -1,6 +1,6 @@
 package club.yuit.basic.clazz.constantpool.parser;
 
-import club.yuit.basic.clazz.annotations.ConstPoolParser;
+import club.yuit.basic.clazz.annotations.ConstPoolLexer;
 import cn.hutool.core.util.ByteUtil;
 
 import java.io.IOException;
@@ -12,7 +12,7 @@ import java.util.List;
  * @author yuit
  * @date 2022/5/23
  **/
-@ConstPoolParser(10)
+@ConstPoolLexer(10)
 public class ConstantMethodrefInfo extends AbstractConstantInfo {
 
     private int classIndex;

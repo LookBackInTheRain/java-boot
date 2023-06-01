@@ -1,6 +1,6 @@
 package club.yuit.basic.clazz.constantpool.parser;
 
-import club.yuit.basic.clazz.annotations.ConstPoolParser;
+import club.yuit.basic.clazz.annotations.ConstPoolLexer;
 import cn.hutool.core.util.ByteUtil;
 
 import java.io.IOException;
@@ -12,7 +12,7 @@ import java.util.List;
  * @author yuit
  * @date 2022/5/23
  **/
-@ConstPoolParser(4)
+@ConstPoolLexer(4)
 public class ConstantFloatInfo extends AbstractConstantInfo {
 
     private float dataValue;

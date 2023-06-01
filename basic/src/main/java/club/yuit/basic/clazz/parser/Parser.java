@@ -12,8 +12,15 @@ import java.nio.channels.FileChannel;
  **/
 public interface Parser {
 
-    ByteBuffer read(FileChannel in);
 
-    void handle(Struct struct);
+
+    int readByte();
+
+    short readShort();
+    int readUnsignedShort();
+    int readInt();
+
+
+    byte[] readBytes(int length);
 
 }

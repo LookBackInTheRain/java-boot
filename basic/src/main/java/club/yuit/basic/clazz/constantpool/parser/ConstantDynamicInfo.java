@@ -1,6 +1,6 @@
 package club.yuit.basic.clazz.constantpool.parser;
 
-import club.yuit.basic.clazz.annotations.ConstPoolParser;
+import club.yuit.basic.clazz.annotations.ConstPoolLexer;
 import cn.hutool.core.util.ByteUtil;
 import lombok.Getter;
 
@@ -14,7 +14,7 @@ import java.util.List;
  * @date 2022/5/23
  **/
 @Getter
-@ConstPoolParser(17)
+@ConstPoolLexer(17)
 public class ConstantDynamicInfo extends AbstractConstantInfo {
 
     private int bmaIndex;

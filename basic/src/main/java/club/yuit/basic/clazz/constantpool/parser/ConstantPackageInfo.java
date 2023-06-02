@@ -19,7 +19,7 @@ public class ConstantPackageInfo extends AbstractConstantInfo {
 
 
     @Override
-    public void handle(InputStream in) throws IOException {
+    public void doParser(){
         byte[] buf4 = new byte[4];
         in.read(buf4, 2, 2);
          nameIndex = ByteUtil.bytesToInt(buf4, ByteOrder.BIG_ENDIAN);

@@ -1,9 +1,9 @@
 package club.yuit.basic.clazz.parser;
 
-import club.yuit.basic.clazz.Struct;
+import club.yuit.basic.clazz.struct.Struct;
 import cn.hutool.core.util.HexUtil;
 
-import java.io.InputStream;
+import java.io.FileReader;
 
 /**
  * @author yuit
@@ -14,19 +14,15 @@ import java.io.InputStream;
 public class FileConstantParser extends AbstractParser {
 
 
-    public FileConstantParser(Struct struct) {
-        super(struct);
-    }
-
 
     @Override
-    public void doParser(Struct struct) {
+    public void doParser(Reader reader,Struct struct) {
         // 魔数
-        int magic = readInt();
+        int magic = reader.readInt();
         // minor_version
-        int minorVersion = readUnsignedShort();
-        int majorVersion = readUnsignedShort();
-        int cpCount = readUnsignedShort();
+        int minorVersion = reader.readUnsignedShort();
+        int majorVersion = reader.readUnsignedShort();
+        int cpCount = reader.readUnsignedShort();
         struct.setMagic(HexUtil.toHex(magic));
         struct.setMinorVersion(minorVersion);
         struct.setMajorVersion(majorVersion);

@@ -1,19 +1,14 @@
 package club.yuit.basic.clazz;
 
 import club.yuit.basic.clazz.constantpool.ConstantPoolParserManger;
-import club.yuit.basic.clazz.constantpool.parser.ConstantInfo;
+import club.yuit.basic.clazz.struct.Struct;
 import cn.hutool.core.util.ByteUtil;
 import cn.hutool.core.util.HexUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.nio.channels.FileChannel;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author yuit

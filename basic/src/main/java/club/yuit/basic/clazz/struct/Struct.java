@@ -1,5 +1,7 @@
-package club.yuit.basic.clazz;
+package club.yuit.basic.clazz.struct;
 
+import club.yuit.basic.clazz.AccessFlags;
+import club.yuit.basic.clazz.constantpool.parser.AbstractConstantInfo;
 import club.yuit.basic.clazz.constantpool.parser.ConstantInfo;
 import lombok.Getter;
 import lombok.Setter;
@@ -37,7 +39,7 @@ public class Struct {
     /**
      * 常量池 cpInfo[constantPoolCount -1]
      */
-    private List<ConstantInfo> cpInfo;
+    private List<AbstractConstantInfo> cpInfo;
 
     /**
      * 访问标志

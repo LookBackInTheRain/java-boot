@@ -1,31 +1,31 @@
 package club.yuit.basic.clazz.constantpool.parser;
 
+import club.yuit.basic.clazz.parser.Reader;
 import club.yuit.basic.clazz.annotations.ConstPoolLexer;
 import cn.hutool.core.util.ByteUtil;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.nio.ByteOrder;
 import java.util.List;
 
 /**
  * @author yuit
  * @date 2022/5/23
+ * 双精度浮点型字面量
  **/
 @ConstPoolLexer(5)
-public class ConstantDoubleInfo extends AbstractConstantInfo {
+public class DoubleInfo extends AbstractConstantInfo {
 
     private double dataValue;
 
-    public ConstantDoubleInfo(List<ConstantInfo> pools) {
-        super(pools);
+    public DoubleInfo(List<AbstractConstantInfo> pool) {
+        super(pool);
     }
 
 
     @Override
-    public void doParser(InputStream in) throws IOException {
-        byte[] buf = new byte[8];
-        in.read(buf);
+    public void doParser(Reader reader)  {
+        // u8
+        byte[] buf = reader.readBytes(8);
         this.dataValue = ByteUtil.bytesToDouble(buf, ByteOrder.BIG_ENDIAN);
     }
 
@@ -37,6 +37,6 @@ public class ConstantDoubleInfo extends AbstractConstantInfo {
 
     @Override
     public String getValue() {
-        return this.dataValue+"";
+        return String.valueOf(this.dataValue);
     }
 }

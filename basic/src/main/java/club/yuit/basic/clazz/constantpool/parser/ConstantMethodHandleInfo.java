@@ -24,7 +24,7 @@ public class ConstantMethodHandleInfo extends AbstractConstantInfo {
 
 
     @Override
-    public void handle(InputStream in) throws IOException {
+    public void doParser() {
         byte[] buf = new byte[2];
         in.read(buf,1,1);
          referenceKind = ByteUtil.bytesToInt(buf,ByteOrder.BIG_ENDIAN);

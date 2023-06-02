@@ -1,6 +1,8 @@
 package club.yuit.basic.clazz.constantpool;
 
-import club.yuit.basic.clazz.Struct;
+import club.yuit.basic.clazz.constantpool.parser.AbstractConstantInfo;
+import club.yuit.basic.clazz.parser.Reader;
+import club.yuit.basic.clazz.struct.Struct;
 import club.yuit.basic.clazz.annotations.ConstPoolLexer;
 import club.yuit.basic.clazz.constantpool.parser.ConstantInfo;
 import cn.hutool.core.util.ClassUtil;
@@ -16,25 +18,29 @@ import java.util.*;
  * @date 2022/5/23
  **/
 @Slf4j
-public class ConstantPoolParserManger {
+public class ConstantPoolParserManger  {
 
-    private  List<ConstantInfo> list;
+    Reader reader;
+    List<AbstractConstantInfo> pool;
+    Struct struct;
     private final static Map<Integer,Class<?>> PARSERS_CLASS = new HashMap<>(19);
 
-    public ConstantPoolParserManger(Struct struct) {
+    public ConstantPoolParserManger(Reader reader,Struct struct) {
+        this.reader = reader;
+        this.struct = struct;
         if (struct.getCpInfo()!=null){
-            this.list=struct.getCpInfo();
+            this.pool=struct.getCpInfo();
         }else {
-            this.list = new ArrayList<>();
-            struct.setCpInfo(list);
+            this.pool = new ArrayList<>();
+            struct.setCpInfo(pool);
         }
         loadParserClass("club.yuit.basic.clazz.constantpool.parser");
     }
 
-    public void parse(int tag, InputStream in) throws IOException {
-        ConstantInfo info = chose(tag);
-        list.add(info);
-        info.handle(in);
+    public void parse(int tag) throws IOException {
+        AbstractConstantInfo info = chose(tag);
+        pool.add(info);
+        info.doParser(reader);
     }
 
     public void loadParserClass(String pkg){
@@ -47,16 +53,16 @@ public class ConstantPoolParserManger {
         log.info("loaded parser classes,size:{}",classes.size());
     }
 
-    ConstantInfo chose(int tag)  {
+    AbstractConstantInfo chose(int tag)  {
         Class<?> clas = PARSERS_CLASS.get(tag);
         if (clas==null){
             return null;
         }
         Constructor<?> constructor = null;
         try {
-            constructor= clas.getConstructor(List.class);
-            Object o = constructor.newInstance(list);
-            return (ConstantInfo) o;
+            constructor= clas.getConstructor(Struct.class);
+            Object o = constructor.newInstance(struct);
+            return (AbstractConstantInfo) o;
         }catch (Exception e){
             e.printStackTrace();
         }

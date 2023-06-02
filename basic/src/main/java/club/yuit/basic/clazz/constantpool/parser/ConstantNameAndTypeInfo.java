@@ -19,7 +19,7 @@ public class ConstantNameAndTypeInfo extends AbstractConstantInfo {
     private int descIndex;
 
     @Override
-    public void handle(InputStream in) throws IOException {
+    public void doParser(){
         byte[] buf = new byte[4];
         in.read(buf,2,2);
          nameIndex = ByteUtil.bytesToInt(buf,ByteOrder.BIG_ENDIAN);

@@ -23,7 +23,7 @@ public class ConstantStringInfo extends AbstractConstantInfo {
 
 
     @Override
-    public void handle(InputStream in) throws IOException {
+    public void doParser() {
         byte[] buf = new byte[2];
         in.read(buf);
         this.dataValue = ByteUtil.bytesToInt(buf,ByteOrder.BIG_ENDIAN)+"";

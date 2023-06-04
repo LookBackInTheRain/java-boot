@@ -60,8 +60,8 @@ public class ConstantPoolParserManger  {
         }
         Constructor<?> constructor = null;
         try {
-            constructor= clas.getConstructor(Struct.class);
-            Object o = constructor.newInstance(struct);
+            constructor= clas.getConstructor(List.class);
+            Object o = constructor.newInstance(pool);
             return (AbstractConstantInfo) o;
         }catch (Exception e){
             e.printStackTrace();

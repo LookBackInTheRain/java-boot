@@ -1,5 +1,6 @@
 package club.yuit.basic.clazz.parser;
 
+import club.yuit.basic.clazz.annotations.Lexer;
 import club.yuit.basic.clazz.struct.ClassFile;
 import club.yuit.basic.clazz.struct.Struct;
 
@@ -17,5 +18,8 @@ public abstract class AbstractParser {
 
     public abstract void doParser(Reader reader,Struct struct);
 
+    public int order(){
+        return this.getClass().getAnnotation(Lexer.class).order();
+    }
 
 }

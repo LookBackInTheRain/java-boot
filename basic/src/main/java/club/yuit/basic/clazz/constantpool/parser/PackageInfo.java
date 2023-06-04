@@ -1,33 +1,32 @@
 package club.yuit.basic.clazz.constantpool.parser;
 
 import club.yuit.basic.clazz.annotations.ConstPoolLexer;
-import cn.hutool.core.util.ByteUtil;
+import club.yuit.basic.clazz.parser.Reader;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.ByteOrder;
 import java.util.List;
 
 /**
  * @author yuit
  * @date 2022/5/23
+ * 一个模块中开放或导出的包
  **/
 @ConstPoolLexer(20)
-public class ConstantPackageInfo extends AbstractConstantInfo {
+public class PackageInfo extends AbstractConstantInfo {
 
+
+    /**
+     * u2 常量池有效索引且索引处的项为CONSTANT_Utf8_Info
+     * 表示包名称
+     */
     private int nameIndex;
 
 
     @Override
-    public void doParser(){
-        byte[] buf4 = new byte[4];
-        in.read(buf4, 2, 2);
-         nameIndex = ByteUtil.bytesToInt(buf4, ByteOrder.BIG_ENDIAN);
-
-
+    public void doParser(Reader reader){
+         nameIndex = reader.readUnsignedShort();
     }
 
-    public ConstantPackageInfo(List<ConstantInfo> pools) {
+    public PackageInfo(List<AbstractConstantInfo> pools) {
         super(pools);
     }
 
@@ -39,6 +38,6 @@ public class ConstantPackageInfo extends AbstractConstantInfo {
 
     @Override
     public String getValue() {
-        return getPools().get(nameIndex-1).getValue();
+        return pool.get(nameIndex-1).getValue();
     }
 }

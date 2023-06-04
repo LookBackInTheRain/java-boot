@@ -1,5 +1,6 @@
 package club.yuit.basic.clazz.parser;
 
+import club.yuit.basic.clazz.annotations.Lexer;
 import club.yuit.basic.clazz.struct.Struct;
 import cn.hutool.core.util.HexUtil;
 
@@ -10,7 +11,7 @@ import java.io.FileReader;
  * @date 2023/5/31
  * 处理class文件前六字节，魔数，小版本号，主版本号信息
  **/
-
+@Lexer(order = 0)
 public class FileConstantParser extends AbstractParser {
 
 

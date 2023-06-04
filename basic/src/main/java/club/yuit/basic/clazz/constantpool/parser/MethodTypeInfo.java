@@ -1,32 +1,33 @@
 package club.yuit.basic.clazz.constantpool.parser;
 
 import club.yuit.basic.clazz.annotations.ConstPoolLexer;
-import cn.hutool.core.util.ByteUtil;
+import club.yuit.basic.clazz.parser.Reader;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.ByteOrder;
 import java.util.List;
 
 /**
  * @author yuit
  * @date 2022/5/23
+ * 方法类型
  **/
 @ConstPoolLexer(16)
-public class ConstantMethodTypeInfo extends AbstractConstantInfo {
+public class MethodTypeInfo extends AbstractConstantInfo {
 
+    /**
+     * u2 值为常量池有效索引且索引处的项必须为 CONSTANT_Utf8_Info
+     * 表示方法的描述符
+     */
     private int descIndex;
 
-    public ConstantMethodTypeInfo(List<ConstantInfo> pools) {
+    public MethodTypeInfo(List<AbstractConstantInfo> pools) {
         super(pools);
     }
 
 
     @Override
-    public void doParser() {
-        byte[] buf = new byte[2];
-        in.read(buf);
-        descIndex = ByteUtil.bytesToInt(buf, ByteOrder.BIG_ENDIAN);
+    public void doParser(Reader reader) {
+
+        descIndex =  reader.readUnsignedShort();
     }
 
     @Override
@@ -37,6 +38,6 @@ public class ConstantMethodTypeInfo extends AbstractConstantInfo {
 
     @Override
     public String getValue() {
-        return getPools().get(descIndex - 1).getValue();
+        return pool.get(descIndex - 1).getValue();
     }
 }

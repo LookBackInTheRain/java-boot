@@ -1,7 +1,8 @@
 package club.yuit.basic.clazz;
 
-import club.yuit.basic.clazz.AccessFlag;
+import club.yuit.basic.clazz.struct.ClassAccessFlag;
 import club.yuit.basic.clazz.constants.AccessFlagEnum;
+import club.yuit.basic.clazz.struct.ClassAccessFlags;
 import cn.hutool.core.util.HexUtil;
 import lombok.extern.slf4j.Slf4j;
 
@@ -50,13 +51,13 @@ public class AccessFlagsUtils {
     }
 
 
-    public static AccessFlags convertToFlags(int value){
+    public static ClassAccessFlags convertToFlags(int value){
         log.info("value:{},hex:{}",value, HexUtil.toHex(value));
-        AccessFlags flags = new AccessFlags();
+        ClassAccessFlags flags = new ClassAccessFlags();
         flags.setAccessFlags(new ArrayList<>());
         FLAGS.forEach(i->{
             if ((i.value&value)==i.value){
-                    AccessFlag flag = new AccessFlag();
+                    ClassAccessFlag flag = new ClassAccessFlag();
                     flags.setValue(i.value);
                     flags.getAccessFlags().add(flag);
             }

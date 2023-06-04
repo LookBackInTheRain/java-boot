@@ -1,8 +1,6 @@
-package club.yuit.basic.clazz;
+package club.yuit.basic.clazz.struct;
 
 import cn.hutool.core.util.HexUtil;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * @author yuit
@@ -10,7 +8,7 @@ import lombok.Setter;
  **/
 
 
-public class AccessFlag {
+public class ClassAccessFlag {
 
     /**
      * 2 字节原始数据

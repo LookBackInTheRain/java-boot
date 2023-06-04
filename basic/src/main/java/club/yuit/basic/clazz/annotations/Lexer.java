@@ -12,11 +12,9 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Lexer {
-
     /**
-     * 去读的字节数
+     * 排序
      * @return
      */
-    int length();
-
+    int order();
 }

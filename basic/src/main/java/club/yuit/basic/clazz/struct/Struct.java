@@ -1,8 +1,6 @@
 package club.yuit.basic.clazz.struct;
 
-import club.yuit.basic.clazz.AccessFlags;
 import club.yuit.basic.clazz.constantpool.parser.AbstractConstantInfo;
-import club.yuit.basic.clazz.constantpool.parser.ConstantInfo;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -44,7 +42,25 @@ public class Struct {
     /**
      * 访问标志
      */
-    private AccessFlags accessFlags;
+    private ClassAccessFlags accessFlags;
+
+    /**
+     * 类索引
+     */
+    private ClassOrInterfaceIndex thisClassIndex;
+    /**
+     * 父类索引
+     */
+    private ClassOrInterfaceIndex superClassIndex;
+
+    /**
+     * 类接口索引集合大小
+     */
+    private int interfaceCount;
+    /**
+     * 接口索引集合
+     */
+    private List<ClassOrInterfaceIndex> interfaceIndices;
 
 
     @Override

@@ -1,6 +1,6 @@
-package club.yuit.basic.clazz;
+package club.yuit.basic.clazz.struct;
 
-import club.yuit.basic.clazz.AccessFlag;
+import club.yuit.basic.clazz.AccessFlagsUtils;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,12 +12,12 @@ import java.util.List;
  */
 @Getter
 @Setter
-public class AccessFlags {
+public class ClassAccessFlags {
 
    private int value;
    private String hex;
 
-   List<AccessFlag> accessFlags;
+   List<ClassAccessFlag> accessFlags;
 
    @Override
    public String toString() {

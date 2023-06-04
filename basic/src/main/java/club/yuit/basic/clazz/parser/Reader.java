@@ -89,6 +89,8 @@ public interface Reader {
             if (getStream().available()<8){
                 throw new RuntimeException();
             }
+            byte[] bytes = getStream().readNBytes(8);
+            return ByteUtil.bytesToLong(bytes);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

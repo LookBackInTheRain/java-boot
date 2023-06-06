@@ -28,8 +28,8 @@ public class NameAndTypeInfo extends AbstractConstantInfo {
 
     @Override
     public void doParser(Reader reader){
-         nameIndex = reader.readUnsignedShort();
-         descIndex = reader.readUnsignedShort();
+         nameIndex = reader.readU2();
+         descIndex = reader.readU2();
     }
 
 

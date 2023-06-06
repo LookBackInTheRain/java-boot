@@ -1,7 +1,10 @@
 package club.yuit.basic.clazz.struct;
 
+import club.yuit.basic.clazz.constantpool.parser.AbstractConstantInfo;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 /**
  * @author yuit
@@ -23,8 +26,8 @@ public class ClassOrInterfaceIndex {
         this.index = index;
     }
 
-    public String getValue(Struct struct){
-       return struct.getCpInfo().get(this.index).getValue();
+    public String getValue(List<AbstractConstantInfo> pool){
+       return pool.get(this.index).getValue();
     }
 
 

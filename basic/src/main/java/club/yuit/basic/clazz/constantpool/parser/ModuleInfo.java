@@ -26,7 +26,7 @@ public class ModuleInfo extends AbstractConstantInfo {
 
     @Override
     public void doParser(Reader reader) {
-         nameIndex = reader.readUnsignedShort();
+         nameIndex = reader.readU2();
     }
 
     @Override

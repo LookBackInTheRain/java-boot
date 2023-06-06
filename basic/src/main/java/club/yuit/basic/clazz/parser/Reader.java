@@ -5,6 +5,7 @@ import cn.hutool.core.util.ByteUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 /**
@@ -14,32 +15,21 @@ import java.nio.ByteOrder;
 public interface Reader {
 
 
-    default int readByte() {
+    default int readU1() {
         try {
             if (getStream().available() < 1) {
                 throw new RuntimeException();
             }
-            return this.getStream().read();
+            byte[] tmp = new byte[2];
+            getStream().read(tmp, 1, 1);
+            return ByteUtil.bytesToShort(tmp, ByteOrder.BIG_ENDIAN);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
 
-    default short readShort() {
-        try {
-            if (getStream().available() < 2) {
-                throw new RuntimeException();
-            }
-            byte[] b = this.getStream().readNBytes(2);
-            return ByteUtil.bytesToShort(b, ByteOrder.BIG_ENDIAN);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    default int readUnsignedShort() {
+    default int readU2() {
         try {
             byte[] tmp = new byte[4];
             if (getStream().available() < 2) {
@@ -56,21 +46,27 @@ public interface Reader {
     }
 
 
-    default int readInt() {
+    default long readU4() {
         try {
-            if (getStream().available() < 4) {
+            byte[] tmp = new byte[8];
+            if (getStream().available() < 2) {
                 throw new RuntimeException();
             }
-            byte[] tmp = this.getStream().readNBytes(4);
-            return ByteUtil.bytesToInt(tmp);
+            int read = 0;
+            while (read != 4) {
+                read += getStream().read(tmp, 4, 4);
+            }
+            return ByteUtil.bytesToLong(tmp, ByteOrder.BIG_ENDIAN);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    default float readFloat() {
-        int tmp = readInt();
-        return Float.intBitsToFloat(tmp);
+    default int readInt() {
+
+        byte[] tmp = readBytes(4);
+        return ByteUtil.bytesToInt(tmp, ByteOrder.BIG_ENDIAN);
+
     }
 
 
@@ -83,14 +79,27 @@ public interface Reader {
     }
 
 
-    default long readLong(){
+    default long readLong() {
 
         try {
-            if (getStream().available()<8){
+            if (getStream().available() < 8) {
                 throw new RuntimeException();
             }
             byte[] bytes = getStream().readNBytes(8);
             return ByteUtil.bytesToLong(bytes);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    default ByteBuffer readBuffer(int length) {
+        try {
+            if (getStream().available() < length) {
+                throw new RuntimeException();
+            }
+            byte[] bytes = getStream().readNBytes(length);
+            return ByteBuffer.wrap(bytes);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

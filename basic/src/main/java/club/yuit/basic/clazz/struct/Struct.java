@@ -29,15 +29,11 @@ public class Struct {
      * 2 字节主版本号
      */
     private int majorVersion;
-    /**
-     * 2 字节常量池长度
-     */
-    private int constantPoolCount;
 
     /**
-     * 常量池 cpInfo[constantPoolCount -1]
+     * 常量池表
      */
-    private List<AbstractConstantInfo> cpInfo;
+    private ConstantPool constantPool;
 
     /**
      * 访问标志
@@ -61,6 +57,13 @@ public class Struct {
      * 接口索引集合
      */
     private List<ClassOrInterfaceIndex> interfaceIndices;
+
+
+
+    private AttributeInfo attributeInfo;
+
+
+
 
 
     @Override

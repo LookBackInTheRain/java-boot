@@ -1,7 +1,7 @@
 package club.yuit.basic.clazz;
 
 import club.yuit.basic.clazz.struct.ClassAccessFlag;
-import club.yuit.basic.clazz.constants.AccessFlagEnum;
+import club.yuit.basic.clazz.constants.ClassAccessFlagEnum;
 import club.yuit.basic.clazz.struct.ClassAccessFlags;
 import cn.hutool.core.util.HexUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -17,18 +17,18 @@ import java.util.List;
 public class AccessFlagsUtils {
 
 
-    private final static List<AccessFlagEnum> FLAGS = new ArrayList<>();
+    private final static List<ClassAccessFlagEnum> FLAGS = new ArrayList<>();
 
     static {
-        FLAGS.add(AccessFlagEnum.ACC_PUBLIC);
-        FLAGS.add(AccessFlagEnum.ACC_FINAL);
-        FLAGS.add(AccessFlagEnum.ACC_SUPER);
-        FLAGS.add(AccessFlagEnum.ACC_INTERFACE);
-        FLAGS.add(AccessFlagEnum.ACC_ABSTRACT);
-        FLAGS.add(AccessFlagEnum.ACC_SYNTHETIC);
-        FLAGS.add(AccessFlagEnum.ACC_ANNOTATION);
-        FLAGS.add(AccessFlagEnum.ACC_ENUM);
-        FLAGS.add(AccessFlagEnum.ACC_MODULE);
+        FLAGS.add(ClassAccessFlagEnum.ACC_PUBLIC);
+        FLAGS.add(ClassAccessFlagEnum.ACC_FINAL);
+        FLAGS.add(ClassAccessFlagEnum.ACC_SUPER);
+        FLAGS.add(ClassAccessFlagEnum.ACC_INTERFACE);
+        FLAGS.add(ClassAccessFlagEnum.ACC_ABSTRACT);
+        FLAGS.add(ClassAccessFlagEnum.ACC_SYNTHETIC);
+        FLAGS.add(ClassAccessFlagEnum.ACC_ANNOTATION);
+        FLAGS.add(ClassAccessFlagEnum.ACC_ENUM);
+        FLAGS.add(ClassAccessFlagEnum.ACC_MODULE);
     }
 
 

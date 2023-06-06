@@ -23,7 +23,7 @@ public class PackageInfo extends AbstractConstantInfo {
 
     @Override
     public void doParser(Reader reader){
-         nameIndex = reader.readUnsignedShort();
+         nameIndex = reader.readU2();
     }
 
     public PackageInfo(List<AbstractConstantInfo> pools) {

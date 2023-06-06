@@ -31,8 +31,8 @@ public class MethodHandleInfo extends AbstractConstantInfo {
 
     @Override
     public void doParser(Reader reader) {
-         referenceKind = reader.readByte();
-         referenceIndex = reader.readUnsignedShort();
+         referenceKind = reader.readU1();
+         referenceIndex = reader.readU2();
     }
 
 

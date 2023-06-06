@@ -32,9 +32,9 @@ public class InvokeDynamicInfo extends AbstractConstantInfo {
     @Override
     public void doParser(Reader reader) {
         // bootstrap_method_attr_index
-        bmaIndex = reader.readUnsignedShort();
+        bmaIndex = reader.readU2();
         // name_and_type_index
-        natIndex = reader.readUnsignedShort();
+        natIndex = reader.readU2();
     }
 
     @Override

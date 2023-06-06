@@ -2,6 +2,7 @@ package club.yuit.basic.clazz.constantpool;
 
 import club.yuit.basic.clazz.constantpool.parser.AbstractConstantInfo;
 import club.yuit.basic.clazz.parser.Reader;
+import club.yuit.basic.clazz.struct.ConstantPool;
 import club.yuit.basic.clazz.struct.Struct;
 import club.yuit.basic.clazz.annotations.ConstPoolLexer;
 import club.yuit.basic.clazz.constantpool.parser.ConstantInfo;
@@ -22,17 +23,17 @@ public class ConstantPoolParserManger  {
 
     Reader reader;
     List<AbstractConstantInfo> pool;
-    Struct struct;
+    ConstantPool constantPool;
     private final static Map<Integer,Class<?>> PARSERS_CLASS = new HashMap<>(19);
 
-    public ConstantPoolParserManger(Reader reader,Struct struct) {
+    public ConstantPoolParserManger(Reader reader,ConstantPool constantPool) {
         this.reader = reader;
-        this.struct = struct;
-        if (struct.getCpInfo()!=null){
-            this.pool=struct.getCpInfo();
+        this.constantPool = constantPool;
+        if (constantPool.getCpInfo()!=null){
+            this.pool=constantPool.getCpInfo();
         }else {
             this.pool = new ArrayList<>();
-            struct.setCpInfo(pool);
+            constantPool.setCpInfo(pool);
         }
         loadParserClass("club.yuit.basic.clazz.constantpool.parser");
     }

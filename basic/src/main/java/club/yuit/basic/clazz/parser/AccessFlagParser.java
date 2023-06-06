@@ -14,7 +14,7 @@ import club.yuit.basic.clazz.struct.Struct;
 public class AccessFlagParser  extends AbstractParser{
     @Override
     public void doParser(Reader reader, Struct struct) {
-        int value = reader.readUnsignedShort();
+        int value = reader.readU2();
         struct.setAccessFlags(AccessFlagsUtils.convertToFlags(value));
     }
 }

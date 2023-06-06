@@ -27,7 +27,7 @@ public class MethodTypeInfo extends AbstractConstantInfo {
     @Override
     public void doParser(Reader reader) {
 
-        descIndex =  reader.readUnsignedShort();
+        descIndex =  reader.readU2();
     }
 
     @Override

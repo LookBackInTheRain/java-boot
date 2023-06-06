@@ -30,8 +30,8 @@ public class MethodRefInfo extends AbstractConstantInfo {
 
     @Override
     public void doParser(Reader reader) {
-         classIndex =  reader.readUnsignedShort();
-         nameAndTypeIndex = reader.readUnsignedShort();
+         classIndex =  reader.readU2();
+         nameAndTypeIndex = reader.readU2();
 
     }
 

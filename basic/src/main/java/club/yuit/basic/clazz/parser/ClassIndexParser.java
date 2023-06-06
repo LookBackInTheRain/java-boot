@@ -18,17 +18,17 @@ public class ClassIndexParser  extends AbstractParser{
     @Override
     public void doParser(Reader reader, Struct struct) {
 
-        ClassOrInterfaceIndex classIndex = new ClassOrInterfaceIndex(reader.readUnsignedShort());
-        ClassOrInterfaceIndex superClassIndex = new ClassOrInterfaceIndex(reader.readUnsignedShort());
+        ClassOrInterfaceIndex classIndex = new ClassOrInterfaceIndex(reader.readU2());
+        ClassOrInterfaceIndex superClassIndex = new ClassOrInterfaceIndex(reader.readU2());
 
         struct.setThisClassIndex(classIndex);
         struct.setSuperClassIndex(superClassIndex);
 
-        int ifCount = reader.readUnsignedShort();
+        int ifCount = reader.readU2();
         if (ifCount!=0){
             List<ClassOrInterfaceIndex> interfaceIndices = new ArrayList<>(ifCount);
             for (int i=0;i<ifCount;i++){
-                interfaceIndices.add(new ClassOrInterfaceIndex(reader.readUnsignedShort()));
+                interfaceIndices.add(new ClassOrInterfaceIndex(reader.readU2()));
             }
 
             struct.setInterfaceIndices(interfaceIndices);

@@ -24,7 +24,7 @@ public class ClassInfo extends AbstractConstantInfo {
     @Override
     public void doParser(Reader reader)  {
         // u2
-       this.nameIndex = reader.readUnsignedShort();
+       this.nameIndex = reader.readU2();
     }
 
     @Override

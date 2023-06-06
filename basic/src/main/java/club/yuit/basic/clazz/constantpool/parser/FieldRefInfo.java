@@ -24,9 +24,9 @@ public class FieldRefInfo extends AbstractConstantInfo {
     @Override
     public void doParser(Reader reader) {
         // u2
-        classIndex = reader.readUnsignedShort();
+        classIndex = reader.readU2();
         // u2
-        nameAndTypeIndex = reader.readUnsignedShort();
+        nameAndTypeIndex = reader.readU2();
     }
 
     @Override

@@ -30,7 +30,7 @@ public class Utf8Info extends AbstractConstantInfo {
     @Override
     public void doParser(Reader reader) {
 
-        length = reader.readUnsignedShort();
+        length = reader.readU2();
         if (length>0){
             byte[] bytes = reader.readBytes(length);
             data = new String(bytes,StandardCharsets.UTF_8);

@@ -34,4 +34,11 @@ public class AttributeItem {
         return reader==null ? ByteBufferReader.build(this.buffer): this.reader;
     }
 
+
+    public void copy(AttributeItem dst){
+        dst.setLength(this.length);
+        dst.setNameIndex(this.nameIndex);
+        dst.setBuffer(this.buffer);
+    }
+
 }

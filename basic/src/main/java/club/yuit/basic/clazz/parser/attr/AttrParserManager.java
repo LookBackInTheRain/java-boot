@@ -48,7 +48,7 @@ public class AttrParserManager  {
         if (itemParser!=null){
             return itemParser.doParser(source,this);
         }
-        return null;
+        return source;
     }
 
     private AttrItemParser newInstance(Class<?> cls){

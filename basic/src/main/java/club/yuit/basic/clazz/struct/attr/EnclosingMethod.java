@@ -8,10 +8,16 @@ import lombok.Setter;
  * @author yuit
  * @date 2023/6/7
  **/
+
 @Getter
 @Setter
-public class StackMapTable  extends AttributeItem {
-
-    private int numberOfEntries;
-
+public class EnclosingMethod extends AttributeItem {
+    /**
+     * u2
+     */
+    private int classIndex;
+    /**
+     * u2
+     */
+    private int methodIndex;
 }

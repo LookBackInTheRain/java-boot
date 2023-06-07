@@ -15,7 +15,7 @@ import lombok.Setter;
 @AttrLexer("LineNumberTable")
 public class LineNumberTableParser extends AttrItemParser{
     @Override
-    AttributeItem doParser(AttributeItem source, AttrParserManager manager) {
+    public AttributeItem doParser(AttributeItem source, AttrParserManager manager) {
         LineNumberTable table = new LineNumberTable();
         source.copy(table);
 

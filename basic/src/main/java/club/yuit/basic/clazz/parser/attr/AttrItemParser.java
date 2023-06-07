@@ -15,7 +15,7 @@ import java.util.List;
 public abstract class AttrItemParser {
 
 
-   abstract  AttributeItem doParser(AttributeItem source,AttrParserManager manager);
+   public abstract  AttributeItem doParser(AttributeItem source,AttrParserManager manager);
 
 
    protected String code(){

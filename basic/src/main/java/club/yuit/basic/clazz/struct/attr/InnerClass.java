@@ -10,8 +10,13 @@ import lombok.Setter;
  **/
 @Getter
 @Setter
-public class StackMapTable  extends AttributeItem {
+public class InnerClass extends AttributeItem {
 
-    private int numberOfEntries;
+    /**
+     * u2 内部类数量
+     */
+    private int numberOfClasses;
+
+    private InnerClassInfo[] innerClassInfos;
 
 }

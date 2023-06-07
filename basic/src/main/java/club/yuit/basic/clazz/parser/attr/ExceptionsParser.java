@@ -12,7 +12,7 @@ import club.yuit.basic.clazz.utils.ByteBufferReader;
 @AttrLexer("Exceptions")
 public class ExceptionsParser  extends AttrItemParser{
     @Override
-    AttributeItem doParser(AttributeItem source, AttrParserManager manager) {
+    public AttributeItem doParser(AttributeItem source, AttrParserManager manager) {
         Exceptions exceptions = new Exceptions();
         source.copy(exceptions);
         ByteBufferReader reader = exceptions.getReader();

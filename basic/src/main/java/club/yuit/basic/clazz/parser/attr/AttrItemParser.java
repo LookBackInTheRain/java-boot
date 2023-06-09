@@ -35,11 +35,12 @@ public abstract class AttrItemParser {
         AttributeInfo attributeInfo = new AttributeInfo();
         List<AttributeItem> items = new ArrayList<>();
         attributeInfo.setAttributeItems(items);
+        attributeInfo.setCount(attrCount);
 
         for (int i = 0; i < attrCount; i++) {
             AttributeItem item = new AttributeItem();
             item.setNameIndex(reader.readU2());
-            int length = reader.readU2();
+            int length = reader.readInt();
             item.setLength(length);
             if (length > 0) {
                 item.setBuffer(reader.readBuffer(length));

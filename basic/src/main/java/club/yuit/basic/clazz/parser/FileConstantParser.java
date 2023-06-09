@@ -23,7 +23,6 @@ public class FileConstantParser extends AbstractParser {
         // minor_version
         int minorVersion = reader.readU2();
         int majorVersion = reader.readU2();
-        int cpCount = reader.readU2();
         struct.setMagic(HexUtil.toHex(magic));
         struct.setMinorVersion(minorVersion);
         struct.setMajorVersion(majorVersion);

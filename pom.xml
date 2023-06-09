@@ -11,10 +11,8 @@
 
     <modules>
         <module>socket</module>
-        <module>/io</module>
-        <module>common</module>
+        <module>/common</module>
         <module>io</module>
-        <module>common</module>
         <module>basic</module>
         <module>thread</module>
         <module>design-patterns</module>

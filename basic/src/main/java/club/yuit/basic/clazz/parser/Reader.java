@@ -96,7 +96,7 @@ public interface Reader {
     default ByteBuffer readBuffer(int length) {
         try {
             if (getStream().available() < length) {
-                throw new RuntimeException();
+                throw new RuntimeException("input stream  out of data，available: "+getStream().available()+", read size: "+length);
             }
             byte[] bytes = getStream().readNBytes(length);
             return ByteBuffer.wrap(bytes);

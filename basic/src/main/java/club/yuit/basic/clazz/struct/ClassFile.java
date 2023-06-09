@@ -22,7 +22,7 @@ public class ClassFile {
     public static ClassFile build(String filename)  {
         File file = new File(filename);
         if (!file.exists()||!file.isFile()){
-            throw new RuntimeException("error create ClassFile Struct,"+filename + "is not class file");
+            throw new RuntimeException("error create ClassFile Struct,"+filename + " is not class file");
         }
         ClassFile classFile = new ClassFile();
         classFile.setFile(file);

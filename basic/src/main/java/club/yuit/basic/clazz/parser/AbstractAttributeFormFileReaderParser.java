@@ -1,6 +1,6 @@
 package club.yuit.basic.clazz.parser;
 
-import club.yuit.basic.clazz.annotations.Lexer;
+import club.yuit.basic.clazz.constantpool.parser.AbstractConstantInfo;
 import club.yuit.basic.clazz.parser.attr.AttrParserManager;
 import club.yuit.basic.clazz.struct.AttributeInfo;
 import club.yuit.basic.clazz.struct.AttributeItem;
@@ -11,19 +11,14 @@ import java.util.List;
 
 /**
  * @author yuit
- * @date 2023/6/6
+ * @date 2023/6/9
  **/
-
-@Lexer(
-        order = 6
-)
-public class AttributeInfoFromFileReaderParser extends AbstractParser {
+public abstract class AbstractAttributeFormFileReaderParser  extends AbstractParser{
 
 
-    @Override
-    public void doParser(Reader reader, Struct struct) {
+    protected AttributeInfo doAttrParser(Reader reader, Struct struct){
+        AttributeInfo attributeInfo = new AttributeInfo();
         int attrCount = reader.readU2();
-        AttributeInfo attributeInfo = struct.getAttributeInfo();
         List<AttributeItem> attributeItems = attributeInfo.getAttributeItems();
         if (attributeItems == null) {
             attributeItems = new ArrayList<>();
@@ -31,13 +26,13 @@ public class AttributeInfoFromFileReaderParser extends AbstractParser {
         }
 
         if (attrCount>0){
-
+            attributeInfo.setCount(attrCount);
             AttrParserManager manager = new AttrParserManager(struct.getConstantPool().getCpInfo());
 
             for (int i = 0; i < attrCount; i++) {
                 AttributeItem item = new AttributeItem();
                 item.setNameIndex(reader.readU2());
-                int length = reader.readU2();
+                int length = reader.readInt();
                 item.setLength(length);
                 if (length > 0) {
                     item.setBuffer(reader.readBuffer(length));
@@ -47,9 +42,7 @@ public class AttributeInfoFromFileReaderParser extends AbstractParser {
             }
         }
 
+        return attributeInfo;
     }
-
-
-
 
 }

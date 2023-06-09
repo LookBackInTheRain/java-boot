@@ -45,7 +45,7 @@ public class AttrParserManager  {
         int nameIndex = source.getNameIndex();
         String value = pool.get(nameIndex - 1).getValue();
         AttrItemParser itemParser = PARSER_MAP.get(value);
-        if (itemParser!=null){
+        if (itemParser!=null&&source.getBuffer()!=null){
             return itemParser.doParser(source,this);
         }
         return source;

@@ -39,8 +39,10 @@ public class ConstantPoolParserManger  {
     }
 
     public void parse(int tag) throws IOException {
+
         AbstractConstantInfo info = chose(tag);
         pool.add(info);
+        log.debug("tag is {}，parser type is {}",tag,info.getClass().getName());
         info.doParser(reader);
     }
 

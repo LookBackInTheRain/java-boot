@@ -59,6 +59,15 @@ public class Struct {
     private List<ClassOrInterfaceIndex> interfaceIndices;
 
 
+    /**
+     * 字段表集合
+     */
+    private FieldMethodInfo fieldInfo;
+
+    /**
+     * 方法表集合
+     */
+    private FieldMethodInfo methodInfo;
 
     private AttributeInfo attributeInfo;
 

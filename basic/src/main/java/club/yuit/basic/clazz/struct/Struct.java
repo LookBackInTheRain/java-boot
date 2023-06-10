@@ -72,6 +72,14 @@ public class Struct {
     private AttributeInfo attributeInfo;
 
 
+    /**
+     * 常量池索引从1 开始
+     * @param index
+     * @return
+     */
+    public AbstractConstantInfo getConstantPoolInfo(int index){
+        return this.constantPool.getCpInfo().get(index-1);
+    }
 
 
 

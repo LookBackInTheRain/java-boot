@@ -23,7 +23,7 @@ public enum MethodAccessFlagEnum  {
     /**
      * 是否由编译器自动产生
      */
-    ACC_SYNIHETIC(0x1000,"synihetic"),
+    ACC_SYNTHETIC(0x1000,"synthetic"),
     /**
      * 是否为枚举
      */

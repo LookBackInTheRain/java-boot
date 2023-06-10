@@ -1,6 +1,7 @@
 package club.yuit.basic.clazz.struct;
 
 import club.yuit.basic.clazz.utils.ByteBufferReader;
+import cn.hutool.core.bean.BeanUtil;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,6 +28,8 @@ public class AttributeItem {
      */
     private ByteBuffer buffer;
 
+    private String name;
+
     private ByteBufferReader reader;
 
 
@@ -36,9 +39,7 @@ public class AttributeItem {
 
 
     public void copy(AttributeItem dst){
-        dst.setLength(this.length);
-        dst.setNameIndex(this.nameIndex);
-        dst.setBuffer(this.buffer);
+        BeanUtil.copyProperties(this,dst);
     }
 
 }

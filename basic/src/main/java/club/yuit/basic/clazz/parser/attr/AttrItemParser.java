@@ -40,6 +40,7 @@ public abstract class AttrItemParser {
         for (int i = 0; i < attrCount; i++) {
             AttributeItem item = new AttributeItem();
             item.setNameIndex(reader.readU2());
+            item.setName(manager.pool.get(item.getNameIndex()-1).getValue());
             int length = reader.readInt();
             item.setLength(length);
             if (length > 0) {

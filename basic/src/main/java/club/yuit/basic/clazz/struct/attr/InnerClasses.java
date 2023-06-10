@@ -10,13 +10,13 @@ import lombok.Setter;
  **/
 @Getter
 @Setter
-public class InnerClass extends AttributeItem {
+public class InnerClasses extends AttributeItem {
 
     /**
      * u2 内部类数量
      */
     private int numberOfClasses;
 
-    private InnerClassInfo[] innerClassInfos;
+    private InnerClassesInfo[] innerClassInfos;
 
 }

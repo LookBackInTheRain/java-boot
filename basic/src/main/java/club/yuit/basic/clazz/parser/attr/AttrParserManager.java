@@ -5,6 +5,7 @@ import club.yuit.basic.clazz.annotations.ConstPoolLexer;
 import club.yuit.basic.clazz.constantpool.parser.AbstractConstantInfo;
 import club.yuit.basic.clazz.parser.attr.AttrItemParser;
 import club.yuit.basic.clazz.struct.AttributeItem;
+import club.yuit.basic.clazz.struct.Struct;
 import cn.hutool.core.util.ClassUtil;
 
 import java.lang.reflect.Constructor;
@@ -22,11 +23,12 @@ public class AttrParserManager  {
 
     final static Map<String, AttrItemParser> PARSER_MAP = new HashMap<>();
 
-    private final List<AbstractConstantInfo> pool;
+    protected final List<AbstractConstantInfo> pool;
+    protected final Struct struct;
 
-
-    public AttrParserManager(List<AbstractConstantInfo> pool) {
-        this.pool = pool;
+    public AttrParserManager(Struct struct) {
+        this.struct = struct;
+        this.pool = struct.getConstantPool().getCpInfo();
         loadParserClassAndInitInstance();
     }
 
@@ -44,6 +46,7 @@ public class AttrParserManager  {
    public AttributeItem doParser(AttributeItem source) {
         int nameIndex = source.getNameIndex();
         String value = pool.get(nameIndex - 1).getValue();
+        source.setName(value);
         AttrItemParser itemParser = PARSER_MAP.get(value);
         if (itemParser!=null&&source.getBuffer()!=null){
             return itemParser.doParser(source,this);

@@ -28,9 +28,7 @@ public class CodeParser extends AttrItemParser {
         }
 
         Code code = new Code();
-        code.setNameIndex(source.getNameIndex());
-        code.setLength(source.getLength());
-        code.setBuffer(source.getBuffer());
+        source.copy(code);
 
         ByteBufferReader reader = code.getReader();
 

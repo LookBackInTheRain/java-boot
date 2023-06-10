@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @author yuit
  * @date 2022/5/23
- * utf8 编码的字符串
+ * utf8 缩略编码的字符串
  **/
 @ConstPoolLexer(1)
 public class Utf8Info extends AbstractConstantInfo {
@@ -45,5 +45,9 @@ public class Utf8Info extends AbstractConstantInfo {
     @Override
     public String getValue() {
         return this.data;
+    }
+
+    public int getLength() {
+        return length;
     }
 }

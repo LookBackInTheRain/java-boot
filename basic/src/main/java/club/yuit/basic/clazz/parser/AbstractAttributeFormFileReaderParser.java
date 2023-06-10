@@ -27,7 +27,7 @@ public abstract class AbstractAttributeFormFileReaderParser  extends AbstractPar
 
         if (attrCount>0){
             attributeInfo.setCount(attrCount);
-            AttrParserManager manager = new AttrParserManager(struct.getConstantPool().getCpInfo());
+            AttrParserManager manager = new AttrParserManager(struct);
 
             for (int i = 0; i < attrCount; i++) {
                 AttributeItem item = new AttributeItem();

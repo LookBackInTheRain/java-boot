@@ -9,12 +9,14 @@ import lombok.Setter;
  **/
 @Getter
 @Setter
-public class InnerClassInfo {
+public class InnerClassesInfo {
     /**
      * u2 inner_class_info_index
      * 是指向常量池中CONSTANT_Class_info型常量的索 引，分别代表了内部类的符号引用
      */
     private int iciIndex;
+
+
     /**
      * u2 outer_class_info_class
      * 是指向常量池中CONSTANT_Class_info型常量的索 引，宿主类的符号引用
